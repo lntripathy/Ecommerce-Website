@@ -20,7 +20,7 @@ const useSignUpController = async (req, res) => {
         const user = await User.findOne({email})
 
         if(user){
-            throw new Error("User already exists.")
+            throw new Error("Email account already exists.")
         }
 
         if(!email){
@@ -45,6 +45,9 @@ const useSignUpController = async (req, res) => {
         const userData = new User(payload)
         const saveUser = await userData.save()
 
+        const dataSize = Buffer.byteLength(JSON.stringify(req.body)); // Calculate size in bytes
+        console.log(`Data size: ${dataSize} bytes`);
+
 
         res.status(201).json({
             data: saveUser,
@@ -55,7 +58,7 @@ const useSignUpController = async (req, res) => {
 
     } catch (error) {
         res.json({
-            message : "Reason for the error is : " + error,
+            message : error.message || error,
             error : true,
             success : false,
         })

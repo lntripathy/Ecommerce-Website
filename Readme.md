@@ -131,7 +131,7 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 For any inquiries or feedback, please contact:
 
 - **Name**: Laxmi Narayana Tripathy  
-- **Email**: your-lntripathyofficial@gmail.com  
+- **Email**: lntripathyofficial@gmail.com  
 - **GitHub**: [Laxmi Narayana Tripathy](https://github.com/lntripathy)
 
 ---

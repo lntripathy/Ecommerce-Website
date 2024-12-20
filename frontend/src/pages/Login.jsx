@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import login from '../assets/login.gif'
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import SummaryApi from '../common/index';
 import { toast } from 'react-toastify';
+import Context from '../context/Index';
 
 
 const Login = () => {
@@ -29,6 +30,7 @@ const Login = () => {
   }
 
   const navigate = useNavigate()
+  const generalContex = useContext(Context)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
