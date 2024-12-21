@@ -3,7 +3,7 @@ import signup from '../assets/signup.gif'
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
-import ImageTobase64 from '../helpers/imageTobase64';
+import ImageTobase64 from '../helpers/ImageTobase64';
 import axios from 'axios';
 import SummaryApi from '../common/index';
 import { toast } from 'react-toastify';
