@@ -1,5 +1,5 @@
 import express from "express";
-import useSignUpController from "../controller/userSignup.js";
+import useSignUpController from "../controller/userSignUp.js";
 import userSignInController from "../controller/userSignIn.js";
 import { userDetailsController } from "../controller/userDetails.js";
 import { authToken } from "../middleware/authToken.js";
