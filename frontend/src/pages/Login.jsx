@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import SummaryApi from '../common/index';
 import { toast } from 'react-toastify';
-import Context from '../context/Index';
+import Context from '../context/Index.jsx';
 
 
 const Login = () => {
@@ -31,6 +31,7 @@ const Login = () => {
 
   const navigate = useNavigate()
   const generalContex = useContext(Context)
+  console.log(generalContex)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -50,6 +51,7 @@ const Login = () => {
 
     if(dataApi.success){
       toast.success(dataApi.message)
+
       navigate('/')
     }
     if(dataApi.error){
