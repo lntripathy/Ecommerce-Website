@@ -30,8 +30,7 @@ const Login = () => {
   }
 
   const navigate = useNavigate()
-  const generalContex = useContext(Context)
-  console.log(generalContex)
+  const { fetchUserDetails } = useContext(Context)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -51,8 +50,8 @@ const Login = () => {
 
     if(dataApi.success){
       toast.success(dataApi.message)
-
       navigate('/')
+      fetchUserDetails()
     }
     if(dataApi.error){
       toast.error(dataApi.message)

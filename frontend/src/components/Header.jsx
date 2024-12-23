@@ -27,9 +27,11 @@ const Header = () => {
 
         <div className='flex gap-7'>
           {/* user logo */}
-          <div className='text-3xl cursor-pointer'>
-            <FaCircleUser />
-          </div>
+          <Link to={"/admin-panel"}>
+            <div className='text-3xl cursor-pointer'>
+              <FaCircleUser />
+            </div>
+          </Link>
 
           {/* cart logo */}
           <div className='text-3xl cursor-pointer relative'>

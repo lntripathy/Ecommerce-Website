@@ -1,4 +1,5 @@
-const backendDomain = "https://lnkart.onrender.com"
+const backendDomain = "http://localhost:3000"
+// "https://lnkart.onrender.com"
 
 const SummaryApi = {
     signUp: {
