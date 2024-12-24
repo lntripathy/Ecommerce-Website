@@ -27,9 +27,7 @@ function App() {
 
   return (
     <>
-      <Context.Provider value={{
-          fetchUserDetails
-        }}>
+      <Context.Provider value={{fetchUserDetails}}>
         <ToastContainer />
         
         <Header />
