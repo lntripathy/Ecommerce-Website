@@ -1,4 +1,4 @@
-const backendDomain = "http://localhost:3000"
+const backendDomain = "http://localhost:3000" || "https://lnkart.onrender.com"
 // "https://lnkart.onrender.com"
 
 const SummaryApi = {
