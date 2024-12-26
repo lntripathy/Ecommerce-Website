@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import { Outlet } from 'react-router-dom'
@@ -6,38 +6,49 @@ import { ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import SummaryApi from './common';
 import Context from './context/Index';
+import { useDispatch } from 'react-redux';
+import { setUserDetails } from './store/userSlice';
 
 
 function App() {
 
-  const fetchUserDetails = async () => {
-    const dataResponse = await axios(SummaryApi.current_user.url, {
-      method: SummaryApi.current_user.method,
-      withCredentials: true,
-    })
+    const dispatch = useDispatch()
 
-    const dataApi = await dataResponse.data
+    const fetchUserDetails = async () => {
+        const dataResponse = await axios(SummaryApi.current_user.url, {
+            method: SummaryApi.current_user.method,
+            withCredentials: true,
+        })
 
-    console.log("user-data", dataApi)
-  }
+        const dataApi = await dataResponse.data
 
-  useEffect(() => {
-    fetchUserDetails()
-  }, [])
+        if(dataApi.success){
+            dispatch(setUserDetails(dataApi.data))
+        }
 
-  return (
-    <>
-      <Context.Provider value={{fetchUserDetails}}>
-        <ToastContainer />
-        
-        <Header />
-        <main className='min-h-[calc(100vh-120px)]'>
-          <Outlet />
-        </main>
-        <Footer />
-      </Context.Provider>
-    </>
-  )
+        console.log("user-data", dataApi)
+    }
+
+    const [user, setUser] = useState(null)
+
+
+    useEffect(() => {
+        fetchUserDetails()
+    }, [])
+
+    return (
+        <>
+            <Context.Provider value={{ user }}>
+                <ToastContainer />
+
+                <Header />
+                <main className='min-h-[calc(100vh-120px)]'>
+                    <Outlet />
+                </main>
+                <Footer />
+            </Context.Provider>
+        </>
+    )
 }
 
 export default App
