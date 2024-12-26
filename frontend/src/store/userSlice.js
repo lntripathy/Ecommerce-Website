@@ -9,7 +9,7 @@ export const userSlice = createSlice({
         setUserDetails: (state, action) => {
             state.user = action.payload
             // console.log("user details in userSlice: ", action.payload)
-        }
+        },
     }
 })
 
