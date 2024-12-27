@@ -45,7 +45,6 @@ const Login = () => {
             data: data
         })
 
-        console.log(dataResponse)
         const dataApi = await dataResponse.data
 
         if (dataApi.success) {

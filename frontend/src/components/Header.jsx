@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '../assets/logo.png'
 import { GrSearch } from "react-icons/gr";
 import { FaCircleUser } from "react-icons/fa6";
@@ -15,13 +15,13 @@ const Header = () => {
 
     const user = useSelector(state => state?.user?.user)
     const dispatch = useDispatch()
-    console.log("user from headers : ", user)
+    const [menuDisplay, setMenuDisplay] = useState(false)
 
     const navigate = useNavigate()
 
 
-// after logout 
-    const handleLogout = async() => {
+    // after logout 
+    const handleLogout = async () => {
         const fetchData = await axios({
             url: SummaryApi.logout_user.url,
             method: SummaryApi.logout_user.method,
@@ -30,12 +30,12 @@ const Header = () => {
 
         const data = await fetchData.data
 
-        if(data.success){
+        if (data.success) {
             toast.success(data.message)
             dispatch(setUserDetails(null))
             navigate('/login')
         }
-        if(data.error){
+        if (data.error) {
             toast.error(data.message)
         }
     }
@@ -43,9 +43,9 @@ const Header = () => {
     return (
         <header className='h-16 shadow-md bg-grey-100 px-4'>
             <nav className='container mx-auto h-full flex items-center justify-between gap-1'>
-                <div>
+                <div className=''>
                     <Link to={"/"}>
-                        <img src={logo} width={"160px"} height={"50px"} alt="" className='rounded-md' />
+                        <img src={logo} alt="" className='h-10 sm:h-[57px] rounded-tl-2xl rounded-br-2xl' />
                     </Link>
                 </div>
 
@@ -58,17 +58,33 @@ const Header = () => {
                 </div>
 
 
-                <div className='flex gap-7'>
+                <div className='flex items-center gap-4'>
+
                     {/* user logo */}
-                    <Link to={"/admin-panel"}>
-                        <div className='text-3xl cursor-pointer'>
+                    <div className='relative flex justify-center'>
+                        <div className='text-3xl cursor-pointer flex justify-center' onClick={() => setMenuDisplay(prev => !prev)}>
                             {
                                 user?.profilePic ? (
-                                    <img src={user.profilePic} alt={user?.name} className='w-10 h-10 rounded-full object-cover'/>
-                                ) : (<FaCircleUser />) 
+                                    <img src={user.profilePic} alt={user?.name} className='w-10 h-10 rounded-full ' />
+                                ) : (<FaCircleUser />)
                             }
                         </div>
-                    </Link>
+
+
+                        {
+                            menuDisplay && (
+                                <div className=' absolute top-10 bg-white shadow-md px-2 py-1 rounded-md hidden md:block'>
+                                    <Link to={"admin-panel"} 
+                                        className='whitespace-nowrap hover:bg-green-200 rounded px-1' 
+                                        onClick={() => setMenuDisplay(prev => !prev)}
+                                    >Admin Panel</Link>
+                                </div>
+                            )
+                        }
+
+
+                    </div>
+
 
                     {/* cart logo */}
                     <div className='text-3xl cursor-pointer relative'>
@@ -86,7 +102,7 @@ const Header = () => {
                     <div className='flex items-center'>
 
                         {
-                            user?._id ?  (
+                            user?._id ? (
                                 <Link onClick={handleLogout} className='px-3 py-1 bg-pink-700 text-white rounded-full hover:bg-pink-800'>Logout</Link>
                             ) : (
                                 <Link to={"login"} className='px-3 py-1 bg-pink-700 text-white rounded-full hover:bg-pink-800'>Login</Link>

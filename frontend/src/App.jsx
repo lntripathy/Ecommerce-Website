@@ -25,8 +25,6 @@ function App() {
         if(dataApi.success){
             dispatch(setUserDetails(dataApi.data))
         }
-
-        console.log("user-data", dataApi)
     }
 
     const [user, setUser] = useState(null)

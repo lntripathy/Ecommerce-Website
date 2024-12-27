@@ -1,5 +1,5 @@
-const backendDomain =  "https://lnkart.onrender.com" || "http://localhost:3000" 
-// "http://localhost:3000" ||
+const backendDomain =   "http://localhost:3000" 
+// "https://lnkart.onrender.com" ||
 
 const SummaryApi = {
     signUp: {
@@ -18,6 +18,10 @@ const SummaryApi = {
         url: `${backendDomain}/api/logout`,
         method: "get"
     },
+    allUsers: {
+        url: `${backendDomain}/api/all-users`,
+        method: "get"
+    }
 }
 
 export default SummaryApi

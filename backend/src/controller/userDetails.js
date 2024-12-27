@@ -3,7 +3,7 @@ import { User } from "../models/userModel.js"
 export const userDetailsController = async (req, res) => {
     try {
         const user = await User.findById(req.userId)
-        console.log("user", user)   
+        // console.log("user from userDetails(backend) ", user)   
 
         res.status(200).json({
             data: user,

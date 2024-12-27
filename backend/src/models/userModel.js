@@ -15,7 +15,10 @@ const userSchema = new mongoose.Schema({
     },
     profilePic: {
         type: String,
-    }
+    },
+    role: {
+        type: String,  
+    },
 },{
     timestamps: true
 })
