@@ -2,6 +2,10 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import SummaryApi from '../common'
 import { toast } from 'react-toastify';
+import moment from 'moment'
+import { FaEdit } from 'react-icons/fa';
+import ChangeUserRole from '../components/ChangeUserRole';
+
 
 
 const AllUsers = () => {
@@ -17,10 +21,10 @@ const AllUsers = () => {
 
         const dataResponse = await fetchData.data
 
-        if(dataResponse.success){
+        if (dataResponse.success) {
             setAllUsers(dataResponse.data)
         }
-        if(dataResponse.error){
+        if (dataResponse.error) {
             toast.error(dataResponse.data)
         }
 
@@ -32,46 +36,60 @@ const AllUsers = () => {
     }, [])
 
     return (
-        <div className='bg-white pb-4'>
-            <table className='w-full '>
+        <div className='bg-white shadow-md rounded-lg overflow-x-auto'>
+            <table className='w-full text-left border-collapse'>
+                {/* Table Header */}
                 <thead>
-                    <tr className='bg-black text-white'>
-                        <th>Sr.</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Created Date</th>
-                        <th>Action</th>
+                    <tr className='bg-gradient-to-r from-pink-700 to-pink-800 text-white text-sm uppercase font-bold tracking-wide'>
+                        <th className='py-3 px-4 text-center'>Sr.</th>
+                        <th className='py-3 px-4'>Name</th>
+                        <th className='py-3 px-4'>Email</th>
+                        <th className='py-3 px-4'>Role</th>
+                        <th className='py-3 px-4'>Created Date</th>
+                        <th className='py-3 px-4'>Created Time</th>
+                        <th className='py-3 px-4'>Action</th>
                     </tr>
                 </thead>
-                <tbody className=''>
-                    {
-                        allUsers.map((el, index) => {
-                            return (
-                                <tr key={index} className='border-b-2'>
-                                    <td>{index + 1}</td>
-                                    <td>{el?.name}</td>
-                                    <td>{el?.email}</td>
-                                    <td>{el?.role}</td>
-                                    {/* <td>{moment(el?.createdAt).format('LL')}</td> */}
-                                    <td>
-                                        <button className='bg-green-100 p-2 rounded-full cursor-pointer hover:bg-green-500 hover:text-white'
-                                            onClick={() => {
-                                                // setUpdateUserDetails(el)
-                                                // setOpenUpdateRole(true)
 
-                                            }}
-                                        >
-                                            {/* <MdModeEdit /> */}
-                                        </button>
-                                    </td>
-                                </tr>
-                            )
-                        })
-                    }
+                {/* Table Body */}
+                <tbody className='text-sm'>
+                    {allUsers.map((el, index) => (
+                        <tr
+                            key={index}
+                            className={`border-b ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'
+                                } hover:bg-green-100 transition-colors duration-200`}
+                        >
+                            <td className='py-3 px-4 text-center font-semibold'>{index + 1}</td>
+                            <td className='py-3 px-4 capitalize font-medium'>{el?.name}</td>
+                            <td className='py-3 px-4'>{el?.email}</td>
+                            <td
+                                className={`py-3 px-4 font-semibold ${el?.role === 'Admin'
+                                        ? 'text-red-500'
+                                        : 'text-gray-700'
+                                    }`}
+                            >
+                                {el?.role}
+                            </td>
+                            <td className='py-3 px-4'>{moment(el?.createdAt).format('LL')}</td>
+                            <td className='py-3 px-4'>{moment(el?.createdAt).format('LT')}</td>
+                            <td className='py-3 px-4 text-center'>
+                                <button
+                                    className='p-2 bg-blue-600 text-white rounded-full shadow-md hover:bg-red-500 transition-all duration-200'
+                                    onClick={() => {
+                                      
+                                    }}
+                                >
+                                    <FaEdit className='text-lg' />
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+            <ChangeUserRole />
+
                 </tbody>
             </table>
         </div>
+
     )
 }
 

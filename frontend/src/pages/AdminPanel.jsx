@@ -17,7 +17,7 @@ const AdminPanel = () => {
             {/* Sidebar */}
             <aside className='min-h-full w-full max-w-60 shadow-lg bg-white'>
                 {/* User Profile */}
-                <div className='h-40 flex justify-center items-center flex-col bg-gradient-to-r from-blue-800 to-blue-700 text-white rounded-r-md'>
+                <div className='h-40 flex justify-center items-center flex-col bg-gradient-to-r from-blue-700 to-blue-800 text-white rounded-r-sm'>
                     <div className='text-5xl cursor-pointer relative flex justify-center'>
                         {user?.profilePic ? (
                             <img
