@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import SummaryApi from '../common';
 import { setUserDetails } from '../store/userSlice';
+import ROLE from '../common/Role';
 
 
 const Header = () => {
@@ -58,27 +59,39 @@ const Header = () => {
                 </div>
 
 
-                <div className='flex items-center gap-4'>
+                <div className='flex items-center gap-5'>
 
                     {/* user logo */}
                     <div className='relative flex justify-center'>
-                        <div className='text-3xl cursor-pointer flex justify-center' onClick={() => setMenuDisplay(prev => !prev)}>
-                            {
-                                user?.profilePic ? (
-                                    <img src={user.profilePic} alt={user?.name} className='w-10 h-10 rounded-full ' />
-                                ) : (<FaCircleUser />)
-                            }
-                        </div>
+
+                        {
+                            user?._id && (
+                                <div className='text-3xl cursor-pointer flex justify-center' onClick={() => setMenuDisplay(prev => !prev)}>
+                                    {
+                                        user?.profilePic ? (
+                                            <img src={user.profilePic} alt={user?.name} className='w-10 h-10 rounded-full ' />
+                                        ) : (<FaCircleUser />)
+                                    }
+                                </div>)
+
+                        }
 
 
                         {
                             menuDisplay && (
-                                <div className=' absolute top-10 bg-white shadow-md px-2 py-1 rounded-md hidden md:block'>
-                                    <Link to={"admin-panel"} 
-                                        className='whitespace-nowrap hover:bg-green-200 rounded px-1' 
-                                        onClick={() => setMenuDisplay(prev => !prev)}
-                                    >Admin Panel</Link>
-                                </div>
+
+                                user?.role === ROLE.ADMIN && (
+                                    <div className=' absolute top-10 bg-white shadow-md px-2 py-1 rounded-md hidden md:block z-10'>
+
+                                        <Link to={"admin-panel/all-products"}
+                                            className='whitespace-nowrap hover:bg-green-200 rounded px-1 '
+                                            onClick={() => setMenuDisplay(prev => !prev)}
+                                        >Admin Panel</Link>
+                                    </div>
+
+                                )
+
+
                             )
                         }
 

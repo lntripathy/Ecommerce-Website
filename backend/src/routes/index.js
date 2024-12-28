@@ -5,6 +5,7 @@ import { userDetailsController } from "../controller/userDetails.js";
 import { authToken } from "../middleware/authToken.js";
 import { userLogout } from "../controller/userLogout.js";
 import { allUsers } from "../controller/allUsers.js"
+import { updateUser } from "../controller/updateUser.js";
 
 const router = express.Router()
 
@@ -15,6 +16,6 @@ router.get("/logout", userLogout)
 
 // admin panel
 router.get("/all-users",authToken, allUsers)
-
+router.post("/update-user",authToken, updateUser)
 
 export default router 

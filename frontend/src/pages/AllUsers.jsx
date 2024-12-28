@@ -11,6 +11,13 @@ import ChangeUserRole from '../components/ChangeUserRole';
 const AllUsers = () => {
 
     const [allUsers, setAllUsers] = useState([])
+    const [openUpdateRole, setOpenUpdateRole] = useState(false)
+    const [updateUserDetails, setUpdateUserDetails] = useState({
+        email: "",
+        name: "",
+        role: "",
+        _id: ""
+    })
 
     const fetchAllUsers = async () => {
         const fetchData = await axios({
@@ -63,9 +70,9 @@ const AllUsers = () => {
                             <td className='py-3 px-4 capitalize font-medium'>{el?.name}</td>
                             <td className='py-3 px-4'>{el?.email}</td>
                             <td
-                                className={`py-3 px-4 font-semibold ${el?.role === 'Admin'
-                                        ? 'text-red-500'
-                                        : 'text-gray-700'
+                                className={`py-3 px-4 font-semibold ${el?.role === 'ADMIN'
+                                    ? 'text-red-500 font-extrabold'
+                                    : 'text-gray-700'
                                     }`}
                             >
                                 {el?.role}
@@ -73,10 +80,12 @@ const AllUsers = () => {
                             <td className='py-3 px-4'>{moment(el?.createdAt).format('LL')}</td>
                             <td className='py-3 px-4'>{moment(el?.createdAt).format('LT')}</td>
                             <td className='py-3 px-4 text-center'>
+                                
                                 <button
-                                    className='p-2 bg-blue-600 text-white rounded-full shadow-md hover:bg-red-500 transition-all duration-200'
+                                    className='p-2 bg-blue-600 text-white rounded-full shadow-md hover:bg-red-500 transition-all duration-100' 
                                     onClick={() => {
-                                      
+                                        setUpdateUserDetails(el)
+                                        setOpenUpdateRole(true)
                                     }}
                                 >
                                     <FaEdit className='text-lg' />
@@ -84,10 +93,24 @@ const AllUsers = () => {
                             </td>
                         </tr>
                     ))}
-            <ChangeUserRole />
 
                 </tbody>
             </table>
+
+
+            {
+                openUpdateRole && (
+                    <ChangeUserRole 
+                        onClose={() => setOpenUpdateRole(false)} 
+                        name={updateUserDetails.name}
+                        email={updateUserDetails.email}
+                        role={updateUserDetails.role}
+                        userId={updateUserDetails._id}
+                        // to refresh the page
+                        callFunc = {fetchAllUsers}
+                     />
+                )
+            }
         </div>
 
     )

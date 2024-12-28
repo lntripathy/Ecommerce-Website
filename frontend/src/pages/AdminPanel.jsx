@@ -1,13 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FaCircleUser } from "react-icons/fa6";
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom'
 import Context from '../context/Index';
 import { useSelector } from 'react-redux';
+import ROLE from '../common/Role';
 
 const AdminPanel = () => {
 
     const user = useSelector(state => state?.user?.user)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if(user?.role !== ROLE.ADMIN){
+            navigate('/')
+        }
+    }, [user])
 
 
     return (
@@ -55,7 +63,7 @@ const AdminPanel = () => {
             </aside>
 
             {/* Main Content */}
-            <main className='w-full h-full p-4 bg-gray-100 rounded-l-lg'>
+            <main className='w-full h-full p-4'>
                 <Outlet />
             </main>
         </div>
