@@ -1,4 +1,4 @@
-const backendDomain =  VITE_NAME_BackEnd_URL
+const backendDomain =  import.meta.env.VITE_NAME_BackEnd_URL
 // "http://localhost:3000" || "https://lnkart.onrender.com"
 
 const SummaryApi = {
