@@ -1,5 +1,5 @@
-const backendDomain =   "https://lnkart.onrender.com" 
-// "https://lnkart.onrender.com" ||
+const backendDomain =  VITE_NAME_BackEnd_URL
+// "http://localhost:3000" || "https://lnkart.onrender.com"
 
 const SummaryApi = {
     signUp: {
