@@ -12,8 +12,6 @@ const ChangeUserRole = ({name, email, role, userId, onClose, callFunc}) => {
 
     const handleOnChnageSelect = (e) => {
         setUserRole(e.target.value) 
-
-        console.log(e.target.value)
     }
 
     // user update
@@ -38,7 +36,6 @@ const ChangeUserRole = ({name, email, role, userId, onClose, callFunc}) => {
             onClose()
             callFunc()
         }
-        console.log("data frm change user role", responseData)
     }
 
     return (
@@ -46,7 +43,7 @@ const ChangeUserRole = ({name, email, role, userId, onClose, callFunc}) => {
             <div className='bg-white shadow-lg p-6 w-full max-w-sm rounded-lg'>
 
                 {/* close tag */}
-                <button className='block ml-auto text-xl hover:bg-red-700 hover:rounded-full hover:text-white' onClick={onClose}>
+                <button className='block ml-auto text-xl hover:text-red-700' onClick={onClose}>
                     <IoMdClose />
                 </button>
 
@@ -57,7 +54,7 @@ const ChangeUserRole = ({name, email, role, userId, onClose, callFunc}) => {
                 </h1>
 
                 {/* User Information */}
-                <div className='mb-4 text-sm text-gray-600'>
+                <div className='mb-4 text-md text-gray-600'>
                     <p className='flex items-center gap-2'>
                         <FaUserAlt className='text-gray-500' /> <span className='font-medium'>Name:</span> {name}
                     </p>

@@ -59,7 +59,7 @@ const AllUsers = () => {
                 </thead>
 
                 {/* Table Body */}
-                <tbody className='text-sm'>
+                <tbody >
                     {allUsers.map((el, index) => (
                         <tr
                             key={index}
@@ -71,7 +71,7 @@ const AllUsers = () => {
                             <td className='py-3 px-4'>{el?.email}</td>
                             <td
                                 className={`py-3 px-4 font-semibold ${el?.role === 'ADMIN'
-                                    ? 'text-red-500 font-extrabold'
+                                    ? 'text-red-500'
                                     : 'text-gray-700'
                                     }`}
                             >
