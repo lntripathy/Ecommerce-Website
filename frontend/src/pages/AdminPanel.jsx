@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { FaCircleUser } from "react-icons/fa6";
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom'
 import Context from '../context/Index';
 import { useSelector } from 'react-redux';
