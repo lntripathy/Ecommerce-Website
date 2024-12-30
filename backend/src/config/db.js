@@ -7,7 +7,8 @@ const connectDB = async () => {
         console.log("DB CONNECTED")
     } catch (error) {
         console.log("DB connnection failed: ", error)
+        throw new Error("Something went wrong!")   
     }
-}
+}   
 
-export default connectDB
+export default connectDB    

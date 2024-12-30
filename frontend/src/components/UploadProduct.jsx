@@ -6,6 +6,7 @@ import SummaryApi from '../common';
 import { toast } from 'react-toastify'
 import uploadImage from '../helpers/uploadImage';
 import DisplayImage from './DisplayImage';
+import axios from 'axios';
 
 const UploadProduct = ({ onClose, fetchData }) => {
 
@@ -22,7 +23,13 @@ const UploadProduct = ({ onClose, fetchData }) => {
     const [openFullScreenImg, setOpenFullScreenImg] = useState(false)
 
     const handleOnChange = (e) => {
-
+        const { name, value } = e.target
+        setData((preve) => {
+            return {
+                ...preve,
+                [name]: value
+            }
+        })
     }
     const handleUploadProduct = async (e) => {
         const file = e.target.files[0]
@@ -52,6 +59,36 @@ const UploadProduct = ({ onClose, fetchData }) => {
         })
     }
 
+    {/* upload product */ }
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        console.log("data after submit button: \n", data)
+
+        const response = await axios( {
+            url:SummaryApi.uploadProduct.url,
+            method: SummaryApi.uploadProduct.method,
+            withCredentials: true,
+            headers: {
+                "content-type": "application/json"
+            },
+            data: data
+        })
+
+        const responseData = await response.data
+
+        if (responseData.success) {
+            toast.success(responseData?.message)
+            onClose()
+            // fetchData()
+        }
+
+        if (responseData.error) {
+            toast.error(responseData?.message)
+        }
+
+
+    }
+
     return (
         <div className='fixed w-full h-full bg-slate-200 bg-opacity-50 top-0 left-0 right-0 bottom-0 flex justify-center items-center'>
             <div className='bg-white p-6 rounded-lg w-full max-w-2xl h-full max-h-[80%] overflow-hidden shadow-xl relative'>
@@ -70,11 +107,11 @@ const UploadProduct = ({ onClose, fetchData }) => {
                 </div>
 
                 {/* Form */}
-                <form className='grid p-4 gap-4 overflow-y-scroll h-full pb-10'>
+                <form className='grid p-4 gap-4 overflow-y-scroll h-full pb-10'  onSubmit={handleSubmit}>
 
                     {/* Product Name */}
                     <div>
-                        <label htmlFor='productName' className='block font-medium'>Product Name :</label>
+                        <label htmlFor='productName' className='block font-medium mb-2'>Product Name :</label>
                         <input
                             type='text'
                             id='productName'
@@ -89,7 +126,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
 
                     {/* Brand Name */}
                     <div>
-                        <label htmlFor='brandName' className='block font-medium'>Brand Name :</label>
+                        <label htmlFor='brandName' className='block font-medium mb-2'>Brand Name :</label>
                         <input
                             type='text'
                             id='brandName'
@@ -104,7 +141,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
 
                     {/* Category */}
                     <div>
-                        <label htmlFor='category' className='block font-medium'>Category :</label>
+                        <label htmlFor='category' className='block font-medium mb-2'>Category :</label>
                         <select
                             required
                             name='category'
@@ -121,7 +158,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
 
                     {/* Product Image */}
                     <div>
-                        <label htmlFor='productImage' className='block font-medium'>Product Image :</label>
+                        <label htmlFor='productImage' className='block font-medium mb-2'>Product Image :</label>
                         <label htmlFor='uploadImageInput'>
                             <div className='p-4 bg-gray-100 border rounded-lg h-40 w-full flex justify-center items-center cursor-pointer hover:bg-gray-200'>
                                 <div className='text-gray-600 flex flex-col items-center gap-2'>
@@ -174,7 +211,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
 
                     {/* Product Price */}
                     <div>
-                        <label htmlFor='price' className='block font-medium'>Price :</label>
+                        <label htmlFor='price' className='block font-medium mb-2'>Price :</label>
                         <input
                             type='number'
                             id='price'
@@ -189,7 +226,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
 
                     {/* Selling Price */}
                     <div>
-                        <label htmlFor='sellingPrice' className='block font-medium'>Selling Price :</label>
+                        <label htmlFor='sellingPrice' className='block font-medium mb-2'>Selling Price :</label>
                         <input
                             type='number'
                             id='sellingPrice'
@@ -204,11 +241,11 @@ const UploadProduct = ({ onClose, fetchData }) => {
 
                     {/* Description */}
                     <div>
-                        <label htmlFor='description' className='block font-medium'>Description :</label>
+                        <label htmlFor='description' className='block font-medium mb-2'>Description :</label>
                         <textarea
                             className='h-28 bg-gray-100 border rounded-lg p-3 resize-none focus:ring focus:ring-blue-300'
                             placeholder='Enter product description'
-                            rows={3}
+                            rows={3} cols={72}
                             onChange={handleOnChange}
                             name='description'
                             value={data?.description || ""}
@@ -218,6 +255,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
                     {/* Submit Button */}
                     <button
                         className='px-4 py-3 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-all mt-4'
+                       
                     >
                         <MdUpload className='inline-block mr-2' /> Upload Product
                     </button>
