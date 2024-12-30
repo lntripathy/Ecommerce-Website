@@ -11,7 +11,6 @@ import { setUserDetails } from './store/userSlice';
 
 
 function App() {
-
     const dispatch = useDispatch()
 
     const fetchUserDetails = async () => {
