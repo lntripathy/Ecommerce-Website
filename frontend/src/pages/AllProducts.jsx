@@ -1,57 +1,62 @@
 import React, { useEffect, useState } from 'react'
 import UploadProduct from '../components/UploadProduct'
 import SummaryApi from '../common'
-// import AdminProductCard from '../components/AdminProductCard'
+import axios from 'axios'
+import AdminProductCard from '../components/AdminProductCard'
+import { MdAddCircle } from "react-icons/md";
+
 
 const AllProducts = () => {
     const [openUploadProduct, setOpenUploadProduct] = useState(false)
     const [allProduct, setAllProduct] = useState([])
 
-    // const fetchAllProduct = async () => {
-    //     const response = await fetch(SummaryApi.allProduct.url)
-    //     const dataResponse = await response.json()
+    const fetchAllProduct = async () => {
+        const response = await axios(SummaryApi.allProduct.url)
+        const dataResponse = await response.data
+        setAllProduct(dataResponse?.data || [])
+           console.log("product data",dataResponse)
 
-    //     console.log("product data", dataResponse)
+    }
 
-    //     setAllProduct(dataResponse?.data || [])
-    // }
-
-    // useEffect(() => {
-    //     fetchAllProduct()
-    // }, [])
+    useEffect(() => {
+        fetchAllProduct()
+    }, [])      // component renders -> function calls
 
     return (
         <div>
-            <div className='bg-white py-2 px-4 flex justify-between items-center'>
-                <h2 className='font-bold text-lg'>All Product</h2>
-                <button className='border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-all py-1 px-3 rounded-full ' onClick={() => setOpenUploadProduct(true)}>Upload Product</button>
+            {/* Header Section */}
+            <div className='bg-white py-3 px-6 flex justify-between items-center shadow-md border-b border-gray-300'>
+                <h2 className='font-bold text-xl text-gray-800'>All Products</h2>
+                <button
+                    className='border-2 border-pink-700 text-pink-700 hover:bg-pink-700 hover:text-white transition-all py-2 px-4 rounded-full flex items-center gap-2'
+                    onClick={() => setOpenUploadProduct(true)}
+                >
+                    <span className='text-lg'>
+                        <MdAddCircle />
+                    </span>
+                    Upload Product
+                </button>
             </div>
 
-            {/**all product */}
-            <div className='flex items-center flex-wrap gap-5 py-4 h-[calc(100vh-190px)] overflow-y-scroll'>
+            {/* Product Grid Section */}
+            <div className='flex flex-wrap gap-6 py-6 px-4 h-[calc(100vh-190px)] overflow-y-scroll bg-gray-50'>
                 {
                     allProduct.map((product, index) => {
                         return (
-                            <AdminProductCard data={product} key={index + "allProduct"}  />
-
-                        )
+                            <AdminProductCard data={product} key={index + "allProduct"} fetchData={fetchAllProduct} />
+                        );
                     })
-                } 
+                }
             </div>
 
-
-
-
-
-            {/**upload prouct component */}
+            {/* Upload Product Component */}
             {
                 openUploadProduct && (
-                    <UploadProduct onClose={() => setOpenUploadProduct(false)} />
+                    <UploadProduct onClose={() => setOpenUploadProduct(false)} fetchData={fetchAllProduct} />
                 )
             }
-
-
         </div>
+
     )
 }
 

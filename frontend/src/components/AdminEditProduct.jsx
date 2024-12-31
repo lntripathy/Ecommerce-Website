@@ -8,17 +8,20 @@ import uploadImage from '../helpers/uploadImage';
 import DisplayImage from './DisplayImage';
 import axios from 'axios';
 
-const UploadProduct = ({ onClose, fetchData }) => {
+
+const AdminEditProduct = ({ onClose, productData, fetchData }) => {
 
     const [data, setData] = useState({
-        productName: "",
-        brandName: "",
-        category: "",
-        productImage: [],
-        description: "",
-        price: "",
-        sellingPrice: ""
+        ...productData,
+        productName: productData?.productName,
+        brandName: productData?.brandName,
+        category: productData?.category,
+        productImage: productData?.productImage || [],
+        description: productData?.description,
+        price: productData?.price,
+        sellingPrice: productData?.sellingPrice
     })
+
     const [fullScreenImage, setFullScreenImage] = useState("")
     const [openFullScreenImg, setOpenFullScreenImg] = useState(false)
 
@@ -62,10 +65,10 @@ const UploadProduct = ({ onClose, fetchData }) => {
     {/* upload product */ }
     const handleSubmit = async (e) => {
         e.preventDefault()
-        
-        const response = await axios( {
-            url:SummaryApi.uploadProduct.url,
-            method: SummaryApi.uploadProduct.method,
+
+        const response = await axios({
+            url: SummaryApi.updateProduct.url,
+            method: SummaryApi.updateProduct.method,
             withCredentials: true,
             headers: {
                 "content-type": "application/json"
@@ -88,6 +91,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
 
     }
 
+
     return (
         <div className='fixed w-full h-full bg-slate-200 bg-opacity-50 top-0 left-0 right-0 bottom-0 flex justify-center items-center'>
             <div className='bg-white p-6 rounded-lg w-full max-w-2xl h-full max-h-[80%] overflow-hidden shadow-xl relative'>
@@ -95,7 +99,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
                 {/* Header */}
                 <div className='flex justify-between items-center pb-4 border-b'>
                     <h2 className='font-bold text-xl flex items-center gap-2'>
-                        <MdCloudUpload className='text-pink-700' /> Upload Product
+                        <MdCloudUpload className='text-pink-700' /> Edit Product
                     </h2>
                     <div
                         className='w-fit ml-auto text-3xl text-gray-600 hover:text-red-600 cursor-pointer transition-all'
@@ -106,7 +110,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
                 </div>
 
                 {/* Form */}
-                <form className='grid p-4 gap-4 overflow-y-scroll h-full pb-10'  onSubmit={handleSubmit}>
+                <form className='grid p-4 gap-4 overflow-y-scroll h-full pb-10' onSubmit={handleSubmit}>
 
                     {/* Product Name */}
                     <div>
@@ -254,9 +258,9 @@ const UploadProduct = ({ onClose, fetchData }) => {
                     {/* Submit Button */}
                     <button
                         className='px-4 py-3 bg-pink-700 text-white rounded-lg font-medium hover:bg-pink-800 transition-all mt-4'
-                       
+
                     >
-                        <MdUpload className='inline-block mr-2' /> Upload Product
+                        <MdUpload className='inline-block mr-2' /> Update Product
                     </button>
                 </form>
 
@@ -272,8 +276,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
                 )
             }
         </div>
-
     )
 }
 
-export default UploadProduct
+export default AdminEditProduct
