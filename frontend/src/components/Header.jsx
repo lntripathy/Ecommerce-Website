@@ -12,6 +12,7 @@ import { setUserDetails } from '../store/userSlice';
 import ROLE from '../common/Role';
 
 
+
 const Header = () => {
 
     const user = useSelector(state => state?.user?.user)
@@ -42,8 +43,8 @@ const Header = () => {
     }
 
     return (
-        <header className='h-16 shadow-md bg-grey-100 px-4 w-full z-40'>
-            <nav className='h-full container mx-auto flex items-center px-4 justify-between'>
+        <header className='h-16 shadow-md bg-grey-100 px-4'>
+            <nav className='container mx-auto h-full flex items-center justify-between gap-1'>
                 <div className=''>
                     <Link to={"/"}>
                         <img src={logo} alt="" className='h-10 sm:h-[57px] rounded-tl-2xl rounded-br-2xl' />

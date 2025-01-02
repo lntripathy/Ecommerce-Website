@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import login from '../assets/login.gif'
 import { FaEye } from "react-icons/fa";
-import { FaEyeSlash } from "react-icons/fa";
+import { FaEyeSlash, FaEnvelope  } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import SummaryApi from '../common/index';
@@ -74,13 +74,16 @@ const Login = () => {
                     <form className='pt-6 flex flex-col gap-2' onSubmit={handleSubmit}>
                         <div className='grid'>
                             <label>Email : </label>
-                            <div className='bg-slate-100 p-2 rounded-md'>
+                            <div className='bg-slate-100 p-2 rounded-md flex'>
                                 <input type="email"
                                     placeholder='enter email'
                                     name='email'
                                     value={data.email}
                                     onChange={handleOnChange}
                                     className='w-full h-full outline-none bg-transparent' />
+                            <span className='text-gray-500 text-lg'>
+                                <FaEnvelope />
+                            </span>
                             </div>
                         </div>
 
@@ -94,7 +97,7 @@ const Login = () => {
                                     onChange={handleOnChange}
                                     className='w-full h-full outline-none bg-transparent ' />
                                 <div className='cursor-pointer text-xl' onClick={() => setShowPassword((prevVal) => !prevVal)}>
-                                    <span>
+                                    <span className='text-gray-500 text-xl'>
                                         {
                                             showPassword ? <FaEye /> : <FaEyeSlash />
                                         }
