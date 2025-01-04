@@ -43,93 +43,98 @@ const Header = () => {
     }
 
     return (
-        <header className='h-16 shadow-md bg-grey-100 px-4'>
-            <nav className='container mx-auto h-full flex items-center justify-between gap-1'>
-                <div className=''>
-                    <Link to={"/"}>
-                        <img src={logo} alt="" className='h-10 sm:h-[57px] rounded-tl-2xl rounded-br-2xl' />
+        <header className="h-16 shadow-md bg-white px-4 fixed w-full z-40 border-b border-gray-200">
+            <nav className="container mx-auto h-full flex items-center justify-between gap-4">
+                {/* Logo Section */}
+                <div>
+                    <Link to="/">
+                        <img
+                            src={logo}
+                            alt="Logo"
+                            className="h-10 sm:h-[57px] rounded-tl-2xl rounded-br-2xl hover:scale-105 transition-transform"
+                        />
                     </Link>
                 </div>
 
-
-                <div className='hidden lg:flex items-center w-full justify-between max-w-sm border rounded-full focus-within:shadow-md pl-2 bg-white'>
-                    <input className='w-full outline-none ' type="text" placeholder='Search' />
-                    <div className='text-lg min-w-[50px] h-8 bg-pink-700 hover:bg-pink-800 flex items-center justify-center text-white rounded-r-full'>
+                {/* Search Bar */}
+                <div className="hidden lg:flex items-center w-full justify-between max-w-lg border border-gray-300 rounded-full shadow-sm focus-within:shadow-md pl-3 bg-gray-50">
+                    <input
+                        className="w-full outline-none bg-transparent px-2 text-gray-700 placeholder-gray-500"
+                        type="text"
+                        placeholder="Search"
+                    />
+                    <div className="text-lg min-w-[50px] h-8 bg-pink-700 hover:bg-pink-800 flex items-center justify-center text-white rounded-r-full cursor-pointer">
                         <GrSearch />
                     </div>
                 </div>
 
+                {/* User Actions */}
+                <div className="flex items-center gap-6">
+                    {/* User Profile */}
+                    <div className="relative flex justify-center">
+                        {user?._id && (
+                            <div
+                                className="text-3xl cursor-pointer flex justify-center"
+                                onClick={() => setMenuDisplay((prev) => !prev)}
+                            >
+                                {user?.profilePic ? (
+                                    <img
+                                        src={user.profilePic}
+                                        alt={user?.name}
+                                        className="w-10 h-10 rounded-full border-2 border-pink-700 shadow-sm hover:shadow-md transition-shadow"
+                                    />
+                                ) : (
+                                    <FaCircleUser className="text-black hover:text-blue-700 transition-colors" />
+                                )}
+                            </div>
+                        )}
 
-                <div className='flex items-center gap-5'>
-
-                    {/* user logo */}
-                    <div className='relative flex justify-center'>
-
-                        {
-                            user?._id && (
-                                <div className='text-3xl cursor-pointer flex justify-center' onClick={() => setMenuDisplay(prev => !prev)}>
-                                    {
-                                        user?.profilePic ? (
-                                            <img src={user.profilePic} alt={user?.name} className='w-10 h-10 rounded-full ' />
-                                        ) : (<FaCircleUser />)
-                                    }
-                                </div>)
-
-                        }
-
-
-                        {
-                            menuDisplay && (
-
-                                user?.role === ROLE.ADMIN && (
-                                    <div className=' absolute top-10 bg-white shadow-md px-2 py-1 rounded-md hidden md:block z-10'>
-
-                                        <Link to={"admin-panel/all-products"}
-                                            className='whitespace-nowrap hover:bg-green-200 rounded px-1 '
-                                            onClick={() => setMenuDisplay(prev => !prev)}
-                                        >Admin Panel</Link>
-                                    </div>
-
-                                )
-
-
-                            )
-                        }
-
-
+                        {menuDisplay &&
+                            user?.role === ROLE.ADMIN && (
+                                <div className="absolute top-10 -right-18 bg-white shadow-lg px-2 py-1 rounded-md z-50 border border-gray-200">
+                                    <Link
+                                        to="admin-panel/all-products"
+                                        className="whitespace-nowrap hover:bg-green-200 rounded px-2 py-1 block  text-black"
+                                        onClick={() => setMenuDisplay((prev) => !prev)}
+                                    >
+                                        Admin Panel
+                                    </Link>
+                                </div>
+                            )}
                     </div>
 
-
-                    {/* cart logo */}
-                    <div className='text-3xl cursor-pointer relative'>
+                    {/* Cart Icon */}
+                    <div className="text-3xl cursor-pointer relative">
                         <span>
-                            <FaCartShopping />
+                            <FaCartShopping className="text-black hover:text-blue-700 transition-colors" />
                         </span>
-                        <div className='bg-red-700 text-white w-5 h-5 p-1 flex justify-center rounded-full items-center absolute -top-2 left-4'>
-                            <p className='text-sm'>
-                                0
-                            </p>
+                        <div className="bg-red-700 text-white w-5 h-5 text-xs flex justify-center items-center rounded-full absolute -top-2 left-5 shadow-md">
+                            0
                         </div>
                     </div>
 
-                    {/* buttons */}
-                    <div className='flex items-center'>
-
-                        {
-                            user?._id ? (
-                                <Link onClick={handleLogout} className='px-3 py-1 bg-pink-700 text-white rounded-full hover:bg-pink-800'>Logout</Link>
-                            ) : (
-                                <Link to={"login"} className='px-3 py-1 bg-pink-700 text-white rounded-full hover:bg-pink-800'>Login</Link>
-                            )
-                        }
-
+                    {/* Login/Logout Button */}
+                    <div>
+                        {user?._id ? (
+                            <Link
+                                onClick={handleLogout}
+                                className="px-4 py-1.5 bg-pink-700 text-white rounded-full hover:bg-pink-800 shadow-sm transition-colors"
+                            >
+                                Logout
+                            </Link>
+                        ) : (
+                            <Link
+                                to="login"
+                                className="px-4 py-1.5 bg-pink-700 text-white rounded-full hover:bg-pink-800 shadow-sm transition-colors"
+                            >
+                                Login
+                            </Link>
+                        )}
                     </div>
-
-
-
                 </div>
             </nav>
         </header>
+
     )
 }
 

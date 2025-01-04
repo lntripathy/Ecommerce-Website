@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom'
 import displayINRCurrency from '../helpers/displayCurrency'
 import { FaAngleRight } from "react-icons/fa6";
 import { FaAngleLeft } from "react-icons/fa6";
+import addToCart from '../helpers/addToCart';
 
 const HorizontalCardProduct = ({ category, heading }) => {
 
     const [data, setData] = useState([])
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const loadingList = new Array(13).fill(null)
 
     const [scroll, setScroll] = useState(0)
@@ -28,7 +29,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
     }
 
     const fetchData = async () => {
-        setLoading(true)
+        // setLoading(true)
         const categoryProduct = await fetchCategoryWiseProduct(category)
         setLoading(false)
         console.log(categoryProduct)
@@ -84,6 +85,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
                     : data.map((product, index) => {
                         return (
                             <Link
+                                to={`product/${product?._id}`}
                                 key={index}
                                 className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 bg-white rounded-sm shadow-md flex hover:shadow-lg transition-shadow'
                             >
@@ -112,7 +114,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
                                     </div>
                                     <button
                                         className='text-sm bg-pink-700 hover:bg-pink-800 text-white px-3 py-1 rounded-full'
-                                        onClick={(e) => handleAddToCart(e, product?._id)}
+                                        onClick={(e) => addToCart(e, product?._id)}
                                     >
                                         Add to Cart
                                     </button>
