@@ -16,7 +16,7 @@ app.use(cookieParser())
 app.use(cors({
     origin: process.env.FRONTEND_URL,
     credentials: true,
-    sameSite: "lax",
+    sameSite: "none",
 }))
 
 app.use("/api", router)
