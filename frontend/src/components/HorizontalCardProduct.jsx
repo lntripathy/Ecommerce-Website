@@ -87,7 +87,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
                             <Link
                                 to={`product/${product?._id}`}
                                 key={index}
-                                className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 bg-white rounded-sm shadow-md flex hover:shadow-lg transition-shadow'
+                                className='w-full min-w-[300px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 bg-white rounded-sm shadow-md flex hover:shadow-lg transition-shadow'
                             >
                                 {/* Product Image */}
                                 <div className='bg-gray-100 h-full p-4 min-w-[120px] md:min-w-[145px] rounded-l-md flex items-center'>
@@ -99,7 +99,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
                                 </div>
 
                                 {/* Product Details */}
-                                <div className='p-4 grid gap-1'>
+                                <div className='p-4 grid gap-1 w-full'>
                                     <h2 className='font-medium text-base md:text-lg text-ellipsis line-clamp-1 text-gray-800'>
                                         {product?.productName}
                                     </h2>
