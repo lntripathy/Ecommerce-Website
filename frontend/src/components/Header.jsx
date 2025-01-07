@@ -91,7 +91,7 @@ const Header = () => {
 
                         {menuDisplay &&
                             user?.role === ROLE.ADMIN && (
-                                <div className="absolute top-10 -right-18 bg-white shadow-lg px-2 py-1 rounded-md z-50 border border-gray-200">
+                                <div className="hidden md:block absolute top-10 -right-18 bg-white shadow-lg px-2 py-1 rounded-md z-50 border border-gray-200">
                                     <Link
                                         to="admin-panel/all-products"
                                         className="whitespace-nowrap hover:bg-green-200 rounded px-2 py-1 block  text-black"
