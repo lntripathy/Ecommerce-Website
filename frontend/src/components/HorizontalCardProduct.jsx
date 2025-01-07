@@ -94,7 +94,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
                                     <img
                                         src={product.productImage[0]}
                                         alt={product.productName}
-                                        className='object-contain h-full w-full hover:scale-110 transition-transform'
+                                        className='object-contain h-full w-full hover:scale-110 transition-transform mix-blend-multiply'
                                     />
                                 </div>
 

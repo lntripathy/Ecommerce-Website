@@ -40,7 +40,7 @@ const VerticalCardProduct = ({ category, heading }) => {
     }, [])
 
     return (
-        <div className="container mx-auto px-4 my-6 relative">
+        <div className="container mx-auto flex flex-col items-center md:block px-4 my-6 relative">
             {/* Heading */}
             <h2 className="text-2xl font-semibold py-4 text-gray-800">{heading}</h2>
 
@@ -80,15 +80,16 @@ const VerticalCardProduct = ({ category, heading }) => {
                     ))
                     : data.map((product, index) => (
                         <Link
+                            to={`product/${product?._id}`}
                             key={index}
-                            className="w-full min-w-[280px] md:min-w-[300px] max-w-[320px] bg-white rounded-lg shadow-md hover:shadow-lg flex flex-col transition-shadow overflow-hidden"
+                            className="w-full min-w-[280px] md:min-w-[300px] max-w-[320px] bg-white rounded-lg shadow-md hover:shadow-lg flex flex-col transition-shadow"
                         >
                             {/* Product Image */}
-                            <div className="bg-gray-100 h-40 w-full flex items-center justify-center">
+                            <div className="bg-gray-100 h-40 w-full flex items-center justify-center overflow-hidden">
                                 <img
                                     src={product.productImage[0]}
                                     alt={product.productName}
-                                    className="object-contain h-full w-full hover:scale-110 transition-transform"
+                                    className="object-contain h-full w-full hover:scale-110 transition-transform mix-blend-multiply"
                                 />
                             </div>
 

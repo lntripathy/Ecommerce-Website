@@ -43,13 +43,13 @@ const ChangeUserRole = ({name, email, role, userId, onClose, callFunc}) => {
             <div className='bg-white shadow-lg p-6 w-full max-w-sm rounded-lg'>
 
                 {/* close tag */}
-                <button className='block ml-auto text-xl hover:text-red-700' onClick={onClose}>
+                <button className='block ml-auto text-2xl hover:text-red-700' onClick={onClose}>
                     <IoMdClose />
                 </button>
 
 
                 {/* Modal Title */}
-                <h1 className='pb-4 text-xl font-semibold text-gray-700 flex items-center gap-2'>
+                <h1 className='pb-4 text-2xl font-semibold text-gray-700 flex items-center gap-2'>
                     <FaUserEdit className='text-blue-600' /> Change User Role
                 </h1>
 
