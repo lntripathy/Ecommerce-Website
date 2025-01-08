@@ -90,7 +90,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
 
     return (
         <div className='fixed w-full h-full bg-slate-200 bg-opacity-50 top-0 left-0 right-0 bottom-0 flex justify-center items-center'>
-            <div className='bg-white p-6 rounded-lg w-full max-w-2xl h-full max-h-[80%] overflow-hidden shadow-xl relative'>
+            <div className='bg-white p-6 rounded-lg w-full max-w-2xl h-full max-h-[80%] overflow-hidden shadow-xl relative zoom-box'>
 
                 {/* Header */}
                 <div className='flex justify-between items-center pb-4 border-b'>

@@ -1,31 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import fetchCategoryWiseProduct from '../helpers/fetchCategorywiseProduct'
 import { Link } from 'react-router-dom'
 import displayINRCurrency from '../helpers/displayCurrency'
-import { FaAngleRight } from "react-icons/fa6";
-import { FaAngleLeft } from "react-icons/fa6";
 
-const VerticalCardProduct = ({ category, heading }) => {
+
+const CategoryWiseProductDisplay = ({ category, heading }) => {
 
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
     const loadingList = new Array(13).fill(null)
 
-    const [scroll, setScroll] = useState(0)
-    const scrollElement = useRef()
-
-    const scrollLeft = () => {
-        scrollElement.current.scrollBy({
-            left: -340,
-            behavior: "smooth",
-        });
-    }
-    const scrollRight = () => {
-        scrollElement.current.scrollBy({
-            left: 340,
-            behavior: "smooth",
-        });
-    }
 
     const fetchData = async () => {
         setLoading(true)
@@ -33,10 +17,12 @@ const VerticalCardProduct = ({ category, heading }) => {
         setLoading(false)
         setData(categoryProduct?.data)
     }
+    
 
     useEffect(() => {
         fetchData()
     }, [])
+
 
     return (
         <div className="container mx-auto flex flex-col md:block px-4 my-6 relative">
@@ -45,23 +31,8 @@ const VerticalCardProduct = ({ category, heading }) => {
 
             {/* Scrollable Product Section */}
             <div
-                className="flex items-center gap-4 md:gap-6 overflow-scroll scrollbar-hide"
-                ref={scrollElement}
+                className="flex flex-wrap gap-4 md:gap-6"
             >
-                {/* Scroll Buttons */}
-                <button
-                    className="bg-gray-100 shadow-md rounded-full p-2 absolute -left-2 text-gray-700 hover:text-gray-900 hover:bg-gray-200 text-xl hidden md:flex items-center justify-center z-10"
-                    onClick={scrollLeft}
-                >
-                    <FaAngleLeft />
-                </button>
-                <button
-                    className="bg-gray-100 shadow-md rounded-full p-2 absolute -right-2 text-gray-700 hover:text-gray-900 hover:bg-gray-200 text-xl hidden md:flex items-center justify-center z-10"
-                    onClick={scrollRight}
-                >
-                    <FaAngleRight />
-                </button>
-
                 {/* Loading State */}
                 {loading
                     ? loadingList.map((product, index) => (
@@ -79,7 +50,7 @@ const VerticalCardProduct = ({ category, heading }) => {
                     ))
                     : data.map((product, index) => (
                         <Link
-                            to={`product/${product?._id}`}
+                            to={`../product/${product?._id}`}
                             key={index}
                             className="w-full min-w-[280px] md:min-w-[300px] max-w-[320px] bg-white rounded-lg shadow-md hover:shadow-lg flex flex-col transition-shadow"
                         >
@@ -121,4 +92,4 @@ const VerticalCardProduct = ({ category, heading }) => {
     )
 }
 
-export default VerticalCardProduct
+export default CategoryWiseProductDisplay

@@ -15,8 +15,6 @@ export const updateUser = async(req,res) => {
 
         const user = await User.findById(sessionUser)
 
-        console.log("user.role from update User",user.role)
-
 
 
         const updateUser = await User.findByIdAndUpdate(userId, payload)

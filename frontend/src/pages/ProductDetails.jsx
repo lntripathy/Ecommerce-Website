@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useLocation, useParams } from 'react-router-dom'
 import SummaryApi from '../common'
 import axios from 'axios'
 import displayINRCurrency from '../helpers/displayCurrency'
 import { FaStar } from "react-icons/fa";
 import { FaStarHalf } from "react-icons/fa";
+import CategoryWiseProductDisplay from '../components/CategoryWiseProductDisplay'
 
 const ProductDetails = () => {
 
@@ -19,15 +20,19 @@ const ProductDetails = () => {
     })
 
     const params = useParams()
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const productImageListLoading = new Array(4).fill(null)
     const [activeImage, setActiveImage] = useState("")
     const [zoomImageCoordinate, setZoomImageCoordinate] = useState({
         x: 0,
         y: 0
     })
+    const [zoomImage, setZoomImage] = useState(false)
+    const location = useLocation()
+
 
     const fetchProductDetails = async () => {
+        setLoading(true)
         const response = await axios({
             url: SummaryApi.productDetails.url,
             method: SummaryApi.productDetails.method,
@@ -48,19 +53,24 @@ const ProductDetails = () => {
 
     useEffect(() => {
         fetchProductDetails()
-    }, [])
+    }, [location.pathname])
 
     const handleMouseEnterProduct = (imgURL) => {
         setActiveImage(imgURL)
     }
 
-    const handleZoomImage = (e) => {
+    const handleZoomImage = useCallback((e) => {
+        setZoomImage(true)
         const { left, top, width, height } = e.target.getBoundingClientRect()
 
         const x = (e.clientX - left) / width
         const y = (e.clientY - top) / height
 
         setZoomImageCoordinate({ x, y })
+    }, [zoomImageCoordinate])
+
+    const handleZoomOutImage = () => {
+        setZoomImage(false)
     }
 
     return (
@@ -73,25 +83,30 @@ const ProductDetails = () => {
                     <div className='h-[300px] w-[300px] lg:h-96 lg:w-96 bg-slate-200 relative p-2 rounded-md'>
                         <img
                             src={activeImage}
-                            className='h-full w-full object-scale-down mix-blend-multiply rounded-md'
-                            onMouseEnter={handleZoomImage}
+                            className='h-full w-full object-scale-down mix-blend-multiply rounded-md hover:cursor-crosshair'
+                            onMouseMove={handleZoomImage}
+                            onMouseLeave={handleZoomOutImage}
                         />
 
                         {/* Product Zoom */}
                         {
-                            // <div 
-                            //     className='hidden lg:block absolute min-w-[500px] overflow-hidden min-h-[400px] bg-slate-200 p-1 rounded-md -right-[510px] top-0 shadow-lg'>
-                            //     <div
-                            //         className='w-full h-full min-h-[400px] min-w-[500px] mix-blend-multiply scale-150'
-                            //         style={{
-                            //             backgroundImage: `url(${activeImage})`,
-                            //             backgroundRepeat: 'no-repeat',
-                            //             backgroundPosition: `${zoomImageCoordinate.x * 100}% ${zoomImageCoordinate.y * 100}% `
-                            //         }}
-                            //     >
-                            //     </div>
-                            // </div>
+                            zoomImage && (
+                                <div
+                                    className='hidden lg:block absolute min-w-[500px] overflow-hidden min-h-[400px] bg-slate-200 p-1 rounded-md -right-[510px] top-0 shadow-lg'>
+                                    <div
+                                        className='w-full h-full min-h-[400px] min-w-[500px] mix-blend-multiply '
+                                        style={{
+                                            backgroundImage: `url(${activeImage})`,
+                                            backgroundRepeat: 'no-repeat',
+                                            backgroundPosition: `${zoomImageCoordinate.x * 100}% ${zoomImageCoordinate.y * 100}% `,
+                                            backgroundSize: '200%'
+                                        }}
+                                    >
+                                    </div>
+                                </div>
+                            )
                         }
+
                     </div>
 
                     {/* Product Side Images */}
@@ -199,6 +214,17 @@ const ProductDetails = () => {
                     )
                 }
             </div>
+
+
+            {
+                data?.category && (
+                    <>
+                        <CategoryWiseProductDisplay category={data?.category} heading={"Recomended Products"} />
+                    </>
+
+                )
+            }
+
         </div>
     )
 }

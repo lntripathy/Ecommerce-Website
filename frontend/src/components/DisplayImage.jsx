@@ -7,7 +7,7 @@ const DisplayImage = ({
 }) => {
     return (
         <div className='fixed bottom-0 top-0 right-0 left-0 flex justify-center items-center bg-black bg-opacity-50 z-50'>
-            <div className='bg-white shadow-xl rounded-lg max-w-5xl mx-auto p-7 relative'>
+            <div className='bg-white shadow-xl rounded-lg max-w-5xl mx-auto p-7 relative zoom-box'>
                 {/* Close Button */}
                 <div
                     className='absolute top-1 right-1 text-gray-800 hover:text-red-700 text-3xl cursor-pointer transition-transform transform'

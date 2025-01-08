@@ -6,12 +6,12 @@ import "../App.css"
 
 const CategoryList = () => {
     const [categoryProduct,setCategoryProduct] = useState([])
-    const [loading,setLoading] = useState(true)
+    const [loading,setLoading] = useState(false)
 
     const categoryLoading = new Array(13).fill(null)
 
     const fetchCategoryProduct = async() =>{
-        // setLoading(true)
+        setLoading(true)
         const response = await axios(SummaryApi.categoryProduct.url)
         const dataResponse = response.data
         setLoading(false)

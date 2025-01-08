@@ -9,7 +9,7 @@ import addToCart from '../helpers/addToCart';
 const HorizontalCardProduct = ({ category, heading }) => {
 
     const [data, setData] = useState([])
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const loadingList = new Array(13).fill(null)
 
     const [scroll, setScroll] = useState(0)
@@ -29,7 +29,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
     }
 
     const fetchData = async () => {
-        // setLoading(true)
+        setLoading(true)
         const categoryProduct = await fetchCategoryWiseProduct(category)
         setLoading(false)
         console.log(categoryProduct)
@@ -46,16 +46,17 @@ const HorizontalCardProduct = ({ category, heading }) => {
             <h2 className='text-2xl font-semibold py-4 text-gray-800'>{heading}</h2>
 
             {/* Scrollable Product Section */}
-            <div className='flex items-center gap-4 md:gap-6 overflow-scroll scrollbar-hide  ' ref={scrollElement}>
+            <div className='flex items-center gap-4 md:gap-6 overflow-scroll scrollbar-hide' 
+            ref={scrollElement}>
                 {/* Scroll Buttons */}
                 <button
-                    className='bg-gray-100 shadow-md rounded-full p-2 absolute left-0 text-gray-700 hover:text-gray-900 hover:bg-gray-200 text-xl hidden md:flex items-center justify-center z-10'
+                    className='bg-gray-100 shadow-md rounded-full p-2 absolute -left-2 text-gray-700 hover:text-gray-900 hover:bg-gray-200 text-xl hidden md:flex items-center justify-center z-10'
                     onClick={scrollLeft}
                 >
                     <FaAngleLeft />
                 </button>
                 <button
-                    className='bg-gray-100 shadow-md rounded-full p-2 absolute right-0 text-gray-700 hover:text-gray-900 hover:bg-gray-200 text-xl hidden md:flex items-center justify-center z-10'
+                    className='bg-gray-100 shadow-md rounded-full p-2 absolute -right-2 text-gray-700 hover:text-gray-900 hover:bg-gray-200 text-xl hidden md:flex items-center justify-center z-10'
                     onClick={scrollRight}
                 >
                     <FaAngleRight />

@@ -2,3 +2,18 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* image zoom in  */
+.zoom-box {
+    animation: bounceIn 0.3s ease;
+}
+@keyframes bounceIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
