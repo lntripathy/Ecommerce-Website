@@ -30,7 +30,7 @@ const Login = () => {
     }
 
     const navigate = useNavigate()
-    const { fetchUserDetails } = useContext(Context)
+    const { fetchUserDetails, fetchUserCart } = useContext(Context)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -51,6 +51,7 @@ const Login = () => {
             toast.success(dataApi.message)
             navigate('/')
             fetchUserDetails()
+            fetchUserCart()
         }
         if (dataApi.error) {
             toast.error(dataApi.message)
