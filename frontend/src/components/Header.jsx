@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import logo from '../assets/logo.png'
 import { GrSearch } from "react-icons/gr";
-import { FaCircleUser } from "react-icons/fa6";
-import { FaCartShopping } from "react-icons/fa6"
+import { FaCircleUser, FaCartShopping } from "react-icons/fa6";
+import { FaSignInAlt, FaSignOutAlt  } from "react-icons/fa"
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -10,14 +10,14 @@ import axios from 'axios';
 import SummaryApi from '../common';
 import { setUserDetails } from '../store/userSlice';
 import ROLE from '../common/Role';
-
-
+import Context from '../context/Index';
 
 const Header = () => {
 
     const user = useSelector(state => state?.user?.user)
     const dispatch = useDispatch()
     const [menuDisplay, setMenuDisplay] = useState(false)
+    const context = useContext(Context)
 
     const navigate = useNavigate()
 
@@ -41,6 +41,11 @@ const Header = () => {
             toast.error(data.message)
         }
     }
+
+    console.log("count context : ", context.cartProductCount)
+    useEffect(() => {
+        context.fetchUserCart()
+    })
 
     return (
         <header className="h-16 shadow-md bg-white px-4 fixed w-full z-40 border-b border-gray-200">
@@ -104,30 +109,38 @@ const Header = () => {
                     </div>
 
                     {/* Cart Icon */}
-                    <div className="text-3xl cursor-pointer relative">
-                        <span>
-                            <FaCartShopping className="text-black hover:text-blue-700 transition-colors" />
-                        </span>
-                        <div className="bg-red-700 text-white w-5 h-5 text-xs flex justify-center items-center rounded-full absolute -top-2 left-5 shadow-md">
-                            0
-                        </div>
-                    </div>
+
+                    {
+                        user?._id && (
+                            <div className="text-3xl cursor-pointer relative">
+                                <span>
+                                    <FaCartShopping className="text-black hover:text-blue-700 transition-colors" />
+                                </span>
+                                <div className="bg-red-700 text-white w-5 h-5 text-xs flex justify-center items-center rounded-full absolute -top-2 left-5 shadow-md">
+                                    {context?.cartProductCount}
+                                </div>
+                            </div>
+                        )
+                    }
+
 
                     {/* Login/Logout Button */}
                     <div>
                         {user?._id ? (
                             <Link
                                 onClick={handleLogout}
-                                className="px-4 py-1.5 bg-pink-700 text-white rounded-full hover:bg-pink-800 shadow-sm transition-colors"
+                                className="px-4 py-1.5 bg-pink-700 text-white rounded-full hover:bg-pink-800 shadow-sm transition-colors flex items-center gap-2"
                             >
-                                Logout
+                                <span className='font-semibold'>Logout</span>
+                                <FaSignOutAlt />
                             </Link>
                         ) : (
                             <Link
                                 to="login"
-                                className="px-4 py-1.5 bg-pink-700 text-white rounded-full hover:bg-pink-800 shadow-sm transition-colors"
+                                className="px-4 py-1.5 bg-pink-700 text-white rounded-full hover:bg-pink-800 shadow-sm transition-colors flex items-center gap-2"
                             >
-                                Login
+                                <FaSignInAlt />
+                                <span className='font-medium'>Login</span>
                             </Link>
                         )}
                     </div>

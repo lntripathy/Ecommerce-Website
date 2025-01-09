@@ -13,7 +13,7 @@ const getCategoryWiseProduct = async (req, res) => {
         })
     } catch (error) {
         res.json({
-            message: err.message || err,
+            message: error.message || error,
             error: true,
             success: false
         })

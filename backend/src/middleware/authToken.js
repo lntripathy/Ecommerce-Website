@@ -6,7 +6,7 @@ export const authToken = async (req, res, next) => {
 
         if (!token) {
             return res.json({
-                message: "User not Login",
+                message: "Please Login to Continue.",
                 error: true,
                 success: false
             })

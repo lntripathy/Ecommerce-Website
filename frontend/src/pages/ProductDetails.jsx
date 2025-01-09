@@ -3,8 +3,8 @@ import { useLocation, useParams } from 'react-router-dom'
 import SummaryApi from '../common'
 import axios from 'axios'
 import displayINRCurrency from '../helpers/displayCurrency'
-import { FaStar } from "react-icons/fa";
-import { FaStarHalf } from "react-icons/fa";
+import { FaStar, FaStarHalf } from "react-icons/fa";
+import { MdVerified } from "react-icons/md";
 import CategoryWiseProductDisplay from '../components/CategoryWiseProductDisplay'
 
 const ProductDetails = () => {
@@ -92,14 +92,14 @@ const ProductDetails = () => {
                         {
                             zoomImage && (
                                 <div
-                                    className='hidden lg:block absolute min-w-[500px] overflow-hidden min-h-[400px] bg-slate-200 p-1 rounded-md -right-[510px] top-0 shadow-lg'>
+                                    className='hidden lg:block absolute min-w-[750px] overflow-hidden max-h-[600px] bg-slate-200 p-1 rounded-md -right-[775px] top-0 shadow-lg z-10'>
                                     <div
-                                        className='w-full h-full min-h-[400px] min-w-[500px] mix-blend-multiply '
+                                        className='w-full h-full rounded-md min-h-[500px] min-w-[750px] mix-blend-multiply '
                                         style={{
                                             backgroundImage: `url(${activeImage})`,
                                             backgroundRepeat: 'no-repeat',
                                             backgroundPosition: `${zoomImageCoordinate.x * 100}% ${zoomImageCoordinate.y * 100}% `,
-                                            backgroundSize: '200%'
+                                            backgroundSize: '250%'
                                         }}
                                     >
                                     </div>
@@ -176,12 +176,16 @@ const ProductDetails = () => {
                             <h2 className='text-2xl lg:text-4xl font-medium text-gray-800'>{data?.productName}</h2>
                             <p className='capitalize text-gray-500'>{data?.category}</p>
 
-                            <div className='text-pink-700 flex items-center gap-1'>
+                            <div className='text-green-700 flex items-center gap-1'>
                                 <FaStar />
                                 <FaStar />
                                 <FaStar />
                                 <FaStar />
                                 <FaStarHalf />
+                                <span className='ml-2 text-sm text-pink-700 font-bold flex items-center gap-1 border border-pink-700 rounded-full px-2 hover:bg-pink-700 hover:text-white transition-colors duration-100'>
+                                <MdVerified  className=''/>
+                                    Verified
+                                </span>
                             </div>
 
                             <div className='flex items-center gap-4 text-2xl lg:text-3xl font-medium my-1'>
@@ -197,11 +201,11 @@ const ProductDetails = () => {
 
                             <div className='flex items-center gap-3 my-2'>
                                 <button
-                                    className='border-2 border-pink-700 rounded-md px-4 py-2 min-w-[120px] text-pink-700 font-medium hover:bg-pink-700 hover:text-white transition-colors'>
+                                    className='border-2 border-pink-700 rounded-md px-4 py-2 min-w-[120px] text-pink-700 font-medium hover:bg-pink-700 hover:text-white transition-colors duration-100'>
                                     Buy
                                 </button>
                                 <button
-                                    className='border-2 border-pink-700 rounded-md px-4 py-2 min-w-[120px] font-medium text-white bg-pink-700 hover:text-pink-700 hover:bg-white transition-colors'>
+                                    className='border-2 border-pink-700 rounded-md px-4 py-2 min-w-[120px] font-medium text-white bg-pink-700 hover:text-pink-700 hover:bg-white transition-colors duration-100'>
                                     Add To Cart
                                 </button>
                             </div>

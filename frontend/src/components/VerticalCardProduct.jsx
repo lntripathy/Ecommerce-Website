@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import displayINRCurrency from '../helpers/displayCurrency'
 import { FaAngleRight } from "react-icons/fa6";
 import { FaAngleLeft } from "react-icons/fa6";
+import addToCart from '../helpers/addToCart';
 
 const VerticalCardProduct = ({ category, heading }) => {
 
@@ -108,7 +109,7 @@ const VerticalCardProduct = ({ category, heading }) => {
                                 </div>
                                 <button
                                     className="text-sm bg-pink-700 hover:bg-pink-800 text-white px-4 py-2 rounded-full"
-                                    onClick={(e) => handleAddToCart(e, product?._id)}
+                                    onClick={(e) => addToCart(e, product?._id)}
                                 >
                                     Add to Cart
                                 </button>
