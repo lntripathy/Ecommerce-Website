@@ -29,6 +29,14 @@ const VerticalCardProduct = ({ category, heading }) => {
         });
     }
 
+    // fetching the cart 
+    const { fetchUserCart } = useContext(Context)
+
+    const handleAddToCart = async (e, id) => {
+        await addToCart(e, id)
+        fetchUserCart()
+    }
+
     const fetchData = async () => {
         setLoading(true)
         const categoryProduct = await fetchCategoryWiseProduct(category)
@@ -40,13 +48,7 @@ const VerticalCardProduct = ({ category, heading }) => {
         fetchData()
     }, [])
 
-// fetching the cart 
-    const { fetchUserCart } = useContext(Context)
 
-    const handleAddToCart = async (e, id) => {
-        await addToCart(e, id)
-        fetchUserCart()
-    }
 
     return (
         <div className="container mx-auto flex flex-col md:block px-4 my-6 relative">

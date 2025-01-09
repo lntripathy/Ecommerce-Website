@@ -12,7 +12,14 @@ const CategoryWiseProductDisplay = ({ category, heading }) => {
     const [loading, setLoading] = useState(false)
     const loadingList = new Array(13).fill(null)
 
- 
+
+    // fetch the cart 
+    const { fetchUserCart } = useContext(Context)
+
+    const handleAddToCart = async (e, id) => {
+        await addToCart(e, id)
+        fetchUserCart()
+    }
 
     const fetchData = async () => {
         setLoading(true)
@@ -20,20 +27,14 @@ const CategoryWiseProductDisplay = ({ category, heading }) => {
         setLoading(false)
         setData(categoryProduct?.data)
     }
-    
+
 
     useEffect(() => {
         fetchData()
     }, [])
 
 
-// add to cart 
-    const { fetchUserCart } = useContext(Context)
 
-    const handleAddToCart = async (e, id) => {
-        await addToCart(e, id)
-        fetchUserCart()
-    }
 
 
     return (

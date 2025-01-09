@@ -86,7 +86,7 @@ const Header = () => {
                                         className="w-10 h-10 rounded-full border-2 border-pink-700 shadow-sm hover:shadow-md transition-shadow"
                                     />
                                 ) : (
-                                    <FaCircleUser className="text-black hover:text-blue-700 transition-colors" />
+                                    <FaCircleUser className="text-black hover:scale-105 transition-all" />
                                 )}
                             </div>
                         )}
@@ -111,7 +111,7 @@ const Header = () => {
                         user?._id && (
                             <div className="text-3xl cursor-pointer relative">
                                 <span>
-                                    <FaCartShopping className="text-black hover:text-blue-700 transition-colors" />
+                                    <FaCartShopping className="text-black hover:scale-105 transition-all" />
                                 </span>
                                 <div className="bg-red-700 text-white w-5 h-5 text-xs flex justify-center items-center rounded-full absolute -top-2 left-5 shadow-md">
                                     {context?.cartProductCount}
