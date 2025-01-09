@@ -140,7 +140,7 @@ const Header = () => {
                                 className="px-4 py-1.5 bg-pink-700 text-white rounded-full hover:bg-pink-800 shadow-sm transition-colors flex items-center gap-2"
                             >
                                 <FaSignInAlt />
-                                <span className='font-medium'>Login</span>
+                                <span className='font-semibold'>Login</span>
                             </Link>
                         )}
                     </div>
