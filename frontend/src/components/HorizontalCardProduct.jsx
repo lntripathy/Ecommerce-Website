@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import fetchCategoryWiseProduct from '../helpers/fetchCategorywiseProduct'
 import { Link } from 'react-router-dom'
 import displayINRCurrency from '../helpers/displayCurrency'
 import { FaAngleRight } from "react-icons/fa6";
 import { FaAngleLeft } from "react-icons/fa6";
 import addToCart from '../helpers/addToCart';
+import Context from '../context/Index';
 
 const HorizontalCardProduct = ({ category, heading }) => {
 
@@ -38,6 +39,15 @@ const HorizontalCardProduct = ({ category, heading }) => {
     useEffect(() => {
         fetchData()
     }, [])
+
+
+// fetching the cart 
+    const { fetchUserCart } = useContext(Context)
+
+    const handleAddToCart = async (e, id) => {
+        await addToCart(e, id)
+        fetchUserCart()
+    }
 
     return (
         <div className='container mx-auto px-4 my-6 relative'>
@@ -114,7 +124,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
                                     </div>
                                     <button
                                         className='text-sm bg-pink-700 hover:bg-pink-800 text-white px-3 py-1 rounded-full'
-                                        onClick={(e) => addToCart(e, product?._id)}
+                                        onClick={(e) => handleAddToCart(e, product?._id)}
                                     >
                                         Add to Cart
                                     </button>

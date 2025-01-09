@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import fetchCategoryWiseProduct from '../helpers/fetchCategorywiseProduct'
 import { Link } from 'react-router-dom'
 import displayINRCurrency from '../helpers/displayCurrency'
+import addToCart from '../helpers/addToCart'
+import Context from '../context/Index'
 
 
 const CategoryWiseProductDisplay = ({ category, heading }) => {
@@ -10,6 +12,7 @@ const CategoryWiseProductDisplay = ({ category, heading }) => {
     const [loading, setLoading] = useState(false)
     const loadingList = new Array(13).fill(null)
 
+ 
 
     const fetchData = async () => {
         setLoading(true)
@@ -22,6 +25,15 @@ const CategoryWiseProductDisplay = ({ category, heading }) => {
     useEffect(() => {
         fetchData()
     }, [])
+
+
+// add to cart 
+    const { fetchUserCart } = useContext(Context)
+
+    const handleAddToCart = async (e, id) => {
+        await addToCart(e, id)
+        fetchUserCart()
+    }
 
 
     return (

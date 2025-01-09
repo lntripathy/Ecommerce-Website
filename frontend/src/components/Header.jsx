@@ -43,9 +43,6 @@ const Header = () => {
     }
 
     console.log("count context : ", context.cartProductCount)
-    useEffect(() => {
-        context.fetchUserCart()
-    })
 
     return (
         <header className="h-16 shadow-md bg-white px-4 fixed w-full z-40 border-b border-gray-200">

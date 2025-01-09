@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import SummaryApi from '../common'
 import axios from 'axios'
@@ -6,6 +6,8 @@ import displayINRCurrency from '../helpers/displayCurrency'
 import { FaStar, FaStarHalf } from "react-icons/fa";
 import { MdVerified } from "react-icons/md";
 import CategoryWiseProductDisplay from '../components/CategoryWiseProductDisplay'
+import Context from '../context/Index'
+import addToCart from '../helpers/addToCart'
 
 const ProductDetails = () => {
 
@@ -71,6 +73,14 @@ const ProductDetails = () => {
 
     const handleZoomOutImage = () => {
         setZoomImage(false)
+    }
+
+    // add to cart
+    const { fetchUserCart } = useContext(Context)
+
+    const handleAddToCart = async (e, id) => {
+        await addToCart(e, id)
+        fetchUserCart()
     }
 
     return (
@@ -205,7 +215,8 @@ const ProductDetails = () => {
                                     Buy
                                 </button>
                                 <button
-                                    className='border-2 border-pink-700 rounded-md px-4 py-2 min-w-[120px] font-medium text-white bg-pink-700 hover:text-pink-700 hover:bg-white transition-colors duration-100'>
+                                    className='border-2 border-pink-700 rounded-md px-4 py-2 min-w-[120px] font-medium text-white bg-pink-700 hover:text-pink-700 hover:bg-white transition-colors duration-100'
+                                    onClick={(e) => handleAddToCart(e, data?._id)}>
                                     Add To Cart
                                 </button>
                             </div>
