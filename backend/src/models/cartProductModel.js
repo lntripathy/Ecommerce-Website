@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const cartSchema = new mongoose.Schema({
     productId: {
+        ref: "Product",
         type: String,
     },
     quantity: {

@@ -90,7 +90,7 @@ const ProductDetails = () => {
                 {/* Product Image */}
                 <div className='h-96 flex flex-col lg:flex-row-reverse gap-6'>
 
-                    <div className='h-[300px] w-[300px] lg:h-96 lg:w-96 bg-slate-200 relative p-2 rounded-md'>
+                    <div className='h-[300px] w-full lg:h-96 lg:w-96 bg-slate-200 relative p-1 rounded-md'>
                         <img
                             src={activeImage}
                             className='h-full w-full object-scale-down mix-blend-multiply rounded-md hover:cursor-crosshair'

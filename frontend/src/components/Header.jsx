@@ -42,7 +42,6 @@ const Header = () => {
         }
     }
 
-    console.log("count context : ", context.cartProductCount)
 
     return (
         <header className="h-16 shadow-md bg-white px-4 fixed w-full z-40 border-b border-gray-200">
@@ -95,7 +94,7 @@ const Header = () => {
                             user?.role === ROLE.ADMIN && (
                                 <div className="hidden md:block absolute top-10 -right-18 bg-white shadow-lg px-2 py-1 rounded-md z-50 border border-gray-200">
                                     <Link
-                                        to="admin-panel/all-products"
+                                        to={"admin-panel/all-products"}
                                         className="whitespace-nowrap hover:bg-green-200 rounded px-2 py-1 block  text-black"
                                         onClick={() => setMenuDisplay((prev) => !prev)}
                                     >
@@ -109,14 +108,14 @@ const Header = () => {
 
                     {
                         user?._id && (
-                            <div className="text-3xl cursor-pointer relative">
+                            <Link to={"view-cart"} className="text-3xl cursor-pointer relative">
                                 <span>
                                     <FaCartShopping className="text-black hover:scale-105 transition-all" />
                                 </span>
                                 <div className="bg-red-700 text-white w-5 h-5 text-xs flex justify-center items-center rounded-full absolute -top-2 left-5 shadow-md">
                                     {context?.cartProductCount}
                                 </div>
-                            </div>
+                            </Link>
                         )
                     }
 

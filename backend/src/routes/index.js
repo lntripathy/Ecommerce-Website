@@ -14,6 +14,7 @@ import getCategoryWiseProduct from "../controller/product/getCategoryWiseProduct
 import getProductDetails from "../controller/product/getProductDetails.js";
 import addToCartController from "../controller/user/addToCartController.js";
 import countCartProduct from "../controller/user/countCartProduct.js";
+import cartView from "../controller/user/cartView.js";
 
 const router = express.Router()
 
@@ -37,7 +38,7 @@ router.post("/product-details", getProductDetails)
 // user add to cart
 router.post("/add-to-cart", authToken, addToCartController)
 router.get("/count-cart-product", authToken, countCartProduct)
-
+router.get("/view-cart", authToken, cartView)
 
 
 export default router 
