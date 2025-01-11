@@ -109,11 +109,12 @@ const Cart = () => {
         if (responseData.success) {
             fetchData()
             context.fetchUserCart()
-            toast.success(responseData.message)
+            toast.warning(responseData.message)
         }
     }
 
-    const totalQty = data.reduce((previousValue, currentValue) => previousValue + currentValue.quantity, 0) 
+    const totalQty = data.reduce((previousValue, currentValue) => previousValue + currentValue.quantity, 0)
+    const totalPrice = data.reduce((previousValue, currentValue) => previousValue + currentValue.quantity * currentValue?.productId?.sellingPrice, 0)
 
 
 
@@ -176,7 +177,6 @@ const Cart = () => {
                                             <div className='flex items-center gap-3 mt-1'>
                                                 {
                                                     (product?.quantity === 1) ? (<button className='border border-gray-500 text-gray-500 w-6 h-6 flex justify-center items-center rounded-full'
-                                                        onClick={() => increaseQty(product?.productId?.productName, product?._id, product?.quantity)}
                                                     >-</button>) :
                                                         (<button className='border border-pink-700 text-pink-700 hover:bg-pink-700 hover:text-white w-6 h-6 flex justify-center items-center rounded-full'
                                                             onClick={() => decreaseQty(product?.productId?.productName, product?._id, product?.quantity)}
@@ -213,7 +213,7 @@ const Cart = () => {
                                 </div>
                                 <div className='flex items-center justify-between text-gray-700 font-medium mt-2'>
                                     <p>Total Price</p>
-                                    <p>{displayINRCurrency('totalPrice')}</p>
+                                    <p>{displayINRCurrency(totalPrice)}</p>
                                 </div>
                             </div>
                             <button className='bg-blue-600 hover:bg-blue-700 text-white w-full py-3 rounded-b-lg transition-colors duration-200'>
