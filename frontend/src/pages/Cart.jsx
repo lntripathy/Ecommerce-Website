@@ -163,7 +163,7 @@ const Cart = () => {
                                                     <p className='text-black font-medium md:text-lg'>{displayINRCurrency(product?.productId?.sellingPrice)}</p>
                                                     <p className='text-gray-400 line-through text-xs md:tex-sm md:font-medium'>{displayINRCurrency(product?.productId?.price)}</p>
                                                     {product?.productId?.price > product?.productId?.sellingPrice && (
-                                                        <p className='text-xs font-semibold text-green-600 md:bg-green-100 md:px-2 md:py-1 md:rounded-full'>
+                                                        <p className='text-xs font-semibold text-green-600 bg-green-100 px-2 py-1 rounded-full'>
                                                             {Math.round(((product?.productId?.price - product?.productId?.sellingPrice) / product?.productId?.price) * 100)}% OFF
                                                         </p>
                                                     )}
