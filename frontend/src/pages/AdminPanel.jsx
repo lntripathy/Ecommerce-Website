@@ -2,9 +2,7 @@ import React, { useEffect } from 'react'
 import { FaCircleUser } from "react-icons/fa6";
 import { Link, useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom'
-import Context from '../context/Index';
 import { useSelector } from 'react-redux';
-import ROLE from '../common/Role';
 
 const AdminPanel = () => {
 
@@ -12,9 +10,9 @@ const AdminPanel = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if(user?.role !== ROLE.ADMIN){
-            navigate('/')
-        }
+        // if(user?.role !== ROLE.ADMIN){
+        //     navigate('../')
+        // }
     }, [user])
 
 
