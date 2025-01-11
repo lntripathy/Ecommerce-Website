@@ -113,6 +113,8 @@ const Cart = () => {
         }
     }
 
+    const totalQty = data.reduce((previousValue, currentValue) => previousValue + currentValue.quantity, 0) 
+
 
 
     return (
@@ -160,13 +162,13 @@ const Cart = () => {
                                             <div className='flex items-center justify-between'>
 
                                                 <div className='flex flex-wrap items-center gap-1 md:gap-3'>
-                                                    <p className='text-black font-medium md:text-lg'>{displayINRCurrency(product?.productId?.sellingPrice)}</p>
-                                                    <p className='text-gray-400 line-through text-xs md:tex-sm md:font-medium'>{displayINRCurrency(product?.productId?.price)}</p>
                                                     {product?.productId?.price > product?.productId?.sellingPrice && (
                                                         <p className='text-xs font-semibold text-green-600 bg-green-100 px-2 py-1 rounded-full'>
                                                             {Math.round(((product?.productId?.price - product?.productId?.sellingPrice) / product?.productId?.price) * 100)}% OFF
                                                         </p>
                                                     )}
+                                                    <p className='text-gray-400 line-through text-xs md:tex-sm md:font-medium'>{displayINRCurrency(product?.productId?.price)}</p>
+                                                    <p className='text-black font-medium md:text-lg'>{displayINRCurrency(product?.productId?.sellingPrice)}</p>
                                                 </div>
 
                                                 <p className='text-green-600 font-bold text-lg'>{displayINRCurrency(product?.productId?.sellingPrice * product?.quantity)}</p>
@@ -207,7 +209,7 @@ const Cart = () => {
                             <div className='px-4 py-2'>
                                 <div className='flex items-center justify-between text-gray-700 font-medium'>
                                     <p>Quantity</p>
-                                    <p>{'totalQty'}</p>
+                                    <p>{totalQty}</p>
                                 </div>
                                 <div className='flex items-center justify-between text-gray-700 font-medium mt-2'>
                                     <p>Total Price</p>
