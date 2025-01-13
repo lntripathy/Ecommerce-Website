@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import SummaryApi from '../common'
 import axios from 'axios'
 import displayINRCurrency from '../helpers/displayCurrency'
@@ -30,7 +30,6 @@ const ProductDetails = () => {
         y: 0
     })
     const [zoomImage, setZoomImage] = useState(false)
-    const location = useLocation()
 
 
     const fetchProductDetails = async () => {
@@ -55,7 +54,7 @@ const ProductDetails = () => {
 
     useEffect(() => {
         fetchProductDetails()
-    }, [location.pathname])
+    }, [params])
 
     const handleMouseEnterProduct = (imgURL) => {
         setActiveImage(imgURL)

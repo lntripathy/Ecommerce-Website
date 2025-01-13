@@ -17,6 +17,7 @@ import countCartProduct from "../controller/user/countCartProduct.js";
 import cartView from "../controller/user/cartView.js";
 import updateCartCount from "../controller/user/updateCartCount.js";
 import deleteCartProduct from "../controller/user/deleteCartProduct.js";
+import searchProduct from "../controller/product/searchProduct.js";
 
 const router = express.Router()
 
@@ -36,6 +37,7 @@ router.post("/update-product", authToken, updateProductController)
 router.get("/get-categoryProduct", getCategoryProduct)
 router.post("/category-product", getCategoryWiseProduct)
 router.post("/product-details", getProductDetails)
+router.get("/search", searchProduct)
 
 // user add to cart
 router.post("/add-to-cart", authToken, addToCartController)

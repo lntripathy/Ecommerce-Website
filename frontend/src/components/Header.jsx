@@ -42,6 +42,16 @@ const Header = () => {
         }
     }
 
+    const handleSearch  = async (e) => {
+        const { value } = e.target
+
+        if(value) {
+            navigate(`/search?q=${value}`)
+        }
+        else{
+            navigate(`/search`)
+        }
+    }
 
     return (
         <header className="h-16 shadow-md bg-white px-4 fixed w-full z-40 border-b border-gray-200">
@@ -63,8 +73,9 @@ const Header = () => {
                         className="w-full outline-none bg-transparent px-2 text-gray-700 placeholder-gray-500"
                         type="text"
                         placeholder="Search"
+                        onChange={handleSearch}
                     />
-                    <div className="text-lg min-w-[50px] h-8 bg-pink-700 hover:bg-pink-800 flex items-center justify-center text-white rounded-r-full cursor-pointer">
+                    <div className="text-lg min-w-[50px] h-8 bg-pink-700 hover:bg-pink-800 flex items-center justify-center text-white rounded-r-full cursor-pointer" >
                         <GrSearch />
                     </div>
                 </div>
@@ -82,7 +93,7 @@ const Header = () => {
                                     <img
                                         src={user.profilePic}
                                         alt={user?.name}
-                                        className="w-10 h-10 rounded-full border-2 border-pink-700 shadow-sm hover:shadow-md transition-shadow"
+                                        className="w-10 h-10 rounded-full border border-gray-500 shadow-md hover:shadow-lg transition-shadow"
                                     />
                                 ) : (
                                     <FaCircleUser className="text-black hover:scale-105 transition-all" />
@@ -108,7 +119,7 @@ const Header = () => {
 
                     {
                         user?._id && (
-                            <Link to={"view-cart"} className="text-3xl cursor-pointer relative">
+                            <Link to={"view-cart"} className="text-3xl cursor-pointer relative" onClick={()=>window.scrollTo({ top: 0 })}>
                                 <span>
                                     <FaCartShopping className="text-black hover:scale-105 transition-all" />
                                 </span>

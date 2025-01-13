@@ -6,7 +6,7 @@ const cartView = async (req, res) => {
 
         const allProduct = await CartProduct.find({
             userId : currentUser
-        }).populate("productId")
+        }).populate("productId").sort({ createdAt : -1 })   // for newers added first
 
         res.json({
             data : allProduct,

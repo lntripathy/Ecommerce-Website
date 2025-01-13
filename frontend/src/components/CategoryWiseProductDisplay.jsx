@@ -44,14 +44,14 @@ const CategoryWiseProductDisplay = ({ category, heading }) => {
 
             {/* Scrollable Product Section */}
             <div
-                className="flex flex-wrap gap-4 md:gap-6"
+                className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4 md:gap-6"
             >
                 {/* Loading State */}
                 {loading
                     ? loadingList.map((product, index) => (
                         <div
                             key={index}
-                            className="w-full min-w-[280px] md:min-w-[300px] max-w-[320px] h-auto bg-white rounded-lg shadow-md flex flex-col animate-pulse overflow-hidden"
+                            className="bg-white rounded-lg shadow-md flex flex-col animate-pulse overflow-hidden"
                         >
                             <div className="bg-gray-200 h-40 w-full"></div>
                             <div className="p-4 grid gap-3">
@@ -65,7 +65,8 @@ const CategoryWiseProductDisplay = ({ category, heading }) => {
                         <Link
                             to={`../product/${product?._id}`}
                             key={index}
-                            className="w-full min-w-[280px] md:min-w-[300px] max-w-[320px] bg-white rounded-lg shadow-md hover:shadow-lg flex flex-col transition-shadow"
+                            className="bg-white rounded-lg shadow-md hover:shadow-lg flex flex-col transition-shadow"
+                            onClick={()=>window.scrollTo({ top: 0, behavior: 'smooth'})}
                         >
                             {/* Product Image */}
                             <div className="bg-gray-100 h-40 w-full flex items-center justify-center overflow-hidden">

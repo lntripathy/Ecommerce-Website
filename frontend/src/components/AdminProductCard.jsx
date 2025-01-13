@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { FaEdit } from 'react-icons/fa';
 import AdminEditProduct from './AdminEditProduct';
 import displayINRCurrency from '../helpers/displayCurrency';
-// import displayINRCurrency from '../helpers/displayCurrency';
 
 const AdminProductCard = ({ data, fetchData }) => {
 
