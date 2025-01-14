@@ -3,7 +3,7 @@ import logo from '../assets/logo.png'
 import { GrSearch } from "react-icons/gr";
 import { FaCircleUser, FaCartShopping } from "react-icons/fa6";
 import { FaSignInAlt, FaSignOutAlt  } from "react-icons/fa"
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -20,6 +20,9 @@ const Header = () => {
     const context = useContext(Context)
 
     const navigate = useNavigate()
+
+    const searchInput = useLocation()
+    const [search, setSearch] = useState(searchInput?.search.split('=')[1])
 
 
     // after logout 
@@ -44,6 +47,7 @@ const Header = () => {
 
     const handleSearch  = async (e) => {
         const { value } = e.target
+        setSearch(value)
 
         if(value) {
             navigate(`/search?q=${value}`)
@@ -68,14 +72,15 @@ const Header = () => {
                 </div>
 
                 {/* Search Bar */}
-                <div className="hidden lg:flex items-center w-full justify-between max-w-lg border border-gray-300 rounded-full shadow-sm focus-within:shadow-md pl-3 bg-gray-50">
+                <div className="hidden lg:flex items-center w-full justify-between max-w-lg border border-gray-300 rounded-lg shadow-sm focus-within:shadow-md pl-3 bg-gray-50">
                     <input
                         className="w-full outline-none bg-transparent px-2 text-gray-700 placeholder-gray-500"
                         type="text"
                         placeholder="Search"
                         onChange={handleSearch}
+                        value={search}
                     />
-                    <div className="text-lg min-w-[50px] h-8 bg-pink-700 hover:bg-pink-800 flex items-center justify-center text-white rounded-r-full cursor-pointer" >
+                    <div className="text-lg min-w-[50px] h-8 bg-pink-700 hover:bg-pink-800 flex items-center justify-center text-white rounded-r-lg cursor-pointer" onClick={handleSearch} >
                         <GrSearch />
                     </div>
                 </div>
