@@ -1,74 +1,161 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { FaSortAmountUpAlt, FaSortAmountDownAlt } from 'react-icons/fa';
+import { BiCategory } from 'react-icons/bi';
+import { useLocation, useParams } from 'react-router-dom'
+import { productCategory } from '../helpers/productCategory'
+import SearchedProductDisplay from '../components/SearchedProductDisplay'
+import axios from 'axios'
+import SummaryApi from '../common'
 
 const CategoryProduct = () => {
 
     const params = useParams()
+    const [data, setData] = useState([])
+    const [loading, setLoading] = useState(false)
+
+    // const location = useLocation()
+    // const urlCategory = new 
+
+    const [selectCategory, setSelectcategory] = useState({})
+    const [filterCategoryList, setFilterCategoryList] = useState([])
+
+    const fetchData = async () => {
+        const response = await axios({
+            url: SummaryApi.filterProduct.url,
+            method: SummaryApi.filterProduct.method,
+            headers: {
+                "content-type": "application/json"
+            },
+            data: {
+                category: filterCategoryList
+            }
+        })
+
+        const responseData = await response.data
+        setData(responseData?.data || [])
+        console.log("response data: ", responseData.data)
+    }
+
+    const handleSelectCategory = (e) => {
+        const { name, value, checked } = e.target
+
+        setSelectcategory((prev) => {
+            return {
+                ...prev,
+                [value]: checked
+            }
+        })
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [filterCategoryList])
+
+    // filtering the selected category
+    useEffect(() => {
+        const arrayOfCategory = Object.keys(selectCategory).map(categorykeyName => {
+            if (selectCategory[categorykeyName]) {
+                return categorykeyName
+            }
+            return null
+        }).filter(el => el)
+
+        setFilterCategoryList(arrayOfCategory)
+
+        // console.log("selectCategory : ", arrayOfCategory )
+    }, [selectCategory])
+
+
     return (
-        <>{params.categoryName}</>
-    //     <div className='capitalize'>
-    //         <div className='container mx-auto p-4'>
 
-    //    {/***desktop version */}
-    //    <div className='hidden lg:grid grid-cols-[200px,1fr]'>
-    //        {/***left side */}
-    //        <div className='bg-white p-2 min-h-[calc(100vh-120px)] overflow-y-scroll'>
-    //             {/**sort by */}
-    //             <div className=''>
-    //                 <h3 className='text-base uppercase font-medium text-slate-500 border-b pb-1 border-slate-300'>Sort by</h3>
+        <div className='capitalize'>
+            <div className='container mx-auto p-6 bg-gray-50 '>
 
-    //                 <form className='text-sm flex flex-col gap-2 py-2'>
-    //                     <div className='flex items-center gap-3'>
-    //                       <input type='radio' name='sortBy' checked={sortBy === 'asc'} onChange={handleOnChangeSortBy} value={"asc"}/>
-    //                       <label>Price - Low to High</label>
-    //                     </div>
+                {/* Desktop Version */}
+                <div className='hidden lg:grid grid-cols-[250px,1fr] gap-4'>
 
-    //                     <div className='flex items-center gap-3'>
-    //                       <input type='radio' name='sortBy' checked={sortBy === 'dsc'} onChange={handleOnChangeSortBy} value={"dsc"}/>
-    //                       <label>Price - High to Low</label>
-    //                     </div>
-    //                 </form>
-    //             </div>
+                    {/* Left Side (Filters) */}
+                    <div className='bg-white p-4 shadow-md rounded-lg min-h-[calc(100vh-120px)] overflow-y-auto'>
+                        {/* Sort By Section */}
+                        <div className='mb-6'>
+                            <h3 className='text-base uppercase font-semibold text-gray-700 flex items-center gap-2'>
+                                <FaSortAmountUpAlt className='text-pink-700' />
+                                Sort by
+                            </h3>
+                            <form className='text-sm flex flex-col gap-3 mt-3'>
+                                <div className='flex items-center gap-3'>
+                                    <input
+                                        type='radio'
+                                        name='sortBy'
+                                        value={"asc"}
+                                        id="low-to-high"
+                                        className='cursor-pointer accent-blue-600'
+                                    />
+                                    <label htmlFor="low-to-high" className='cursor-pointer'>
+                                        Price - Low to High
+                                    </label>
+                                </div>
+                                <div className='flex items-center gap-3'>
+                                    <input
+                                        type='radio'
+                                        name='sortBy'
+                                        value={"dsc"}
+                                        id="high-to-low"
+                                        className='cursor-pointer accent-blue-600'
+                                    />
+                                    <label htmlFor="high-to-low" className='cursor-pointer'>
+                                        Price - High to Low
+                                    </label>
+                                </div>
+                            </form>
+                        </div>
 
+                        {/* Filter by Category */}
+                        <div>
+                            <h3 className='text-base uppercase font-semibold text-gray-700 flex items-center gap-2'>
+                                <BiCategory className='text-pink-700' />
+                                Category
+                            </h3>
+                            <form className='text-sm flex flex-col gap-3 mt-3'>
+                                {productCategory.map((categoryName, index) => (
+                                    <div className='flex items-center gap-3' key={index}>
+                                        <input
+                                            type='checkbox'
+                                            name={"category"}
+                                            value={categoryName?.value}
+                                            id={categoryName?.value}
+                                            checked={selectCategory[categoryName?.value]}
+                                            onChange={handleSelectCategory}
+                                            className='cursor-pointer accent-blue-600'
+                                        />
+                                        <label
+                                            htmlFor={categoryName?.value}
+                                            className='cursor-pointer'>
+                                            {categoryName?.label}
+                                        </label>
+                                    </div>
+                                ))}
+                            </form>
+                        </div>
+                    </div>
 
-    //             {/**filter by */}
-    //             <div className=''>
-    //                 <h3 className='text-base uppercase font-medium text-slate-500 border-b pb-1 border-slate-300'>Category</h3>
+                    {/* Right Side (Products) */}
+                    <div className='px-4'>
+                        <p className='font-semibold text-gray-800 text-lg mb-4'>
+                            Search Results: {data.length}
+                        </p>
 
-    //                 <form className='text-sm flex flex-col gap-2 py-2'>
-    //                     {
-    //                       productCategory.map((categoryName,index)=>{
-    //                         return(
-    //                           <div className='flex items-center gap-3'>
-    //                              <input type='checkbox' name={"category"} checked={selectCategory[categoryName?.value]} value={categoryName?.value} id={categoryName?.value} onChange={handleSelectCategory} />
-    //                              <label htmlFor={categoryName?.value}>{categoryName?.label}</label>
-    //                           </div>
-    //                         )
-    //                       })
-    //                     }
-    //                 </form>
-    //             </div>
-
-
-    //        </div>
-
-
-    //         {/***right side ( product ) */}
-    //         <div className='px-4'>
-    //           <p className='font-medium text-slate-800 text-lg my-2'>Search Results : {data.length}</p>
-
-    //          <div className='min-h-[calc(100vh-120px)] overflow-y-scroll max-h-[calc(100vh-120px)]'>
-    //           {
-    //               data.length !== 0 && !loading && (
-    //                 <VerticalCard data={data} loading={loading}/>
-    //               )
-    //           }
-    //          </div>
-    //         </div>
-    //    </div>
-       
-    // </div>
-    //     </div>
+                        <div className='bg-white p-4 shadow-md rounded-lg min-h-[calc(100vh-120px)] max-h-[calc(100vh-120px)] overflow-y-auto'>
+                            {data.length !== 0 && !loading ? (
+                                <SearchedProductDisplay data={data} loading={loading} />
+                            ) : (
+                                <p className='text-center text-gray-500'>No Products Found.</p>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     )
 }
 

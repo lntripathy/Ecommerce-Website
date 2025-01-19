@@ -80,7 +80,7 @@ const Header = () => {
                         onChange={handleSearch}
                         value={search}
                     />
-                    <div className="text-lg min-w-[50px] h-8 bg-pink-700 hover:bg-pink-800 flex items-center justify-center text-white rounded-r-lg cursor-pointer" onClick={handleSearch} >
+                    <div className="text-lg min-w-[50px] h-8 bg-pink-700 hover:bg-pink-800 flex items-center justify-center text-white rounded-r-lg cursor-pointer" >
                         <GrSearch />
                     </div>
                 </div>

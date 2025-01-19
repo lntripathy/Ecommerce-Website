@@ -44,7 +44,7 @@ const SearchedProductDisplay = ({loading, data=[]}) => {
                         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                     >
                         {/* Product Image */}
-                        <div className="bg-gray-100 h-40 w-full flex items-center justify-center overflow-hidden">
+                        <div className="bg-gray-100 h-40 w-full flex items-center justify-center overflow-hidden rounded-md">
                             <img
                                 src={product.productImage[0]}
                                 alt={product.productName}

@@ -36,7 +36,7 @@ const router = createBrowserRouter([
                 element: <SignUp />
             },
             {
-                path: "product-category/:categoryName",
+                path: "product-category",
                 element: <CategoryProduct />
             },
             {

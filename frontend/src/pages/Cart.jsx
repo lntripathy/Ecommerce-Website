@@ -144,10 +144,10 @@ const Cart = () => {
                         ) : (
                             data?.map((product, index) => {
                                 return (
-                                    <div key={product?._id + "Add To Cart Loading"} className='w-full bg-white h-40 my-2 border border-slate-300  rounded-md shadow-sm hover:shadow-md grid grid-cols-[140px,1fr]'>
+                                    <div key={product?._id + "Add To Cart Loading"} className='w-full bg-white h-44 md:h-40 my-2 border border-slate-300  rounded-md shadow-sm hover:shadow-md grid grid-cols-[140px,1fr]'>
                                         <Link
                                             to={`../product/${product?.productId?._id}`}
-                                            className='w-36 h-40 bg-slate-200'>
+                                            className='w-36 h-44 md:h-40 bg-slate-200'>
                                             <img src={product?.productId?.productImage[0]} className='w-full h-full object-scale-down mix-blend-multiply p-1 hover:scale-105 transition-all' />
                                         </Link>
                                         <div className='p-4 flex flex-col md:gap-1 relative'>
