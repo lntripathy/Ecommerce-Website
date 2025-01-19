@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import signup from '../assets/signup.gif'
-import { FaEye } from "react-icons/fa";
-import { FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaEnvelope, FaUser  } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import ImageTobase64 from '../helpers/ImageTobase64';
 import axios from 'axios';
 import SummaryApi from '../common/index';
 import { toast } from 'react-toastify';
+
 
 const SignUp = () => {
 
@@ -107,26 +107,28 @@ const SignUp = () => {
             {/* username */}
             <div className='grid'>
               <label>Username : </label>
-              <div className='bg-slate-100 p-2 rounded-md'>
+              <div className='bg-slate-100 p-2 rounded-md flex items-center'>
                 <input type="text"
                   placeholder='enter username'
                   name='name'
                   value={data.name}
                   onChange={handleOnChange}
                   className='w-full h-full outline-none bg-transparent' />
+              <FaUser  className="text-gray-500 text-lg" />
               </div>
             </div>
 
             {/* email */}
             <div className='grid'>
               <label>Email : </label>
-              <div className='bg-slate-100 p-2 rounded-md'>
+              <div className='bg-slate-100 p-2 rounded-md flex items-center'>
                 <input type="email"
                   placeholder='enter email'
                   name='email'
                   value={data.email}
                   onChange={handleOnChange}
                   className='w-full h-full outline-none bg-transparent' />
+                  <FaEnvelope className="text-gray-500 text-lg" />
               </div>
             </div>
 
@@ -140,7 +142,7 @@ const SignUp = () => {
                   value={data.password}
                   onChange={handleOnChange}
                   className='w-full h-full outline-none bg-transparent ' />
-                <div className='cursor-pointer text-xl' onClick={() => setShowPassword((prevVal) => !prevVal)}>
+                <div className='cursor-pointer text-gray-500 text-xl' onClick={() => setShowPassword((prevVal) => !prevVal)}>
                   <span>
                     {
                       showPassword ? <FaEye /> : <FaEyeSlash />
@@ -160,7 +162,7 @@ const SignUp = () => {
                   value={data.confirmPassword}
                   onChange={handleOnChange}
                   className='w-full h-full outline-none bg-transparent ' />
-                <div className='cursor-pointer text-xl' onClick={() => setShowConfirmPassword((prevVal) => !prevVal)}>
+                <div className='cursor-pointer text-xl text-gray-500' onClick={() => setShowConfirmPassword((prevVal) => !prevVal)}>
                   <span>
                     {
                       showConfirmPassword ? <FaEye /> : <FaEyeSlash />

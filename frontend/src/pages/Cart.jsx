@@ -114,6 +114,7 @@ const Cart = () => {
     }
 
     const totalQty = data.reduce((previousValue, currentValue) => previousValue + currentValue.quantity, 0)
+    const totalMRP = data.reduce((previousValue, currentValue) => previousValue + currentValue.quantity * currentValue?.productId?.price, 0)
     const totalPrice = data.reduce((previousValue, currentValue) => previousValue + currentValue.quantity * currentValue?.productId?.sellingPrice, 0)
 
 
@@ -129,7 +130,7 @@ const Cart = () => {
                 }
             </div>
 
-            <div className='flex flex-col lg:flex-row gap-10 lg:justify-between p-4'>
+            <div className='flex flex-col lg:flex-row gap-10 lg:justify-around p-4'>
                 {/* view product */}
                 <div className='w-full max-w-3xl '>
                     {
@@ -198,7 +199,7 @@ const Cart = () => {
 
 
                 {/* summary  */}
-                <div className='w-full lg:max-w-sm'>
+                <div className='w-full lg:max-w-lg'>
                     {loading ? (
                         <div className='h-40 bg-slate-200 border border-slate-300 animate-pulse rounded-lg'></div>
                     ) : (
@@ -211,10 +212,28 @@ const Cart = () => {
                                     <p>Quantity</p>
                                     <p>{totalQty}</p>
                                 </div>
-                                <div className='flex items-center justify-between text-gray-700 font-medium mt-2'>
+                                <div className='flex items-center justify-between text-gray-700 font-medium mt-3'>
+                                    <p>MRP</p>
+                                    <p>{displayINRCurrency(totalMRP)}</p>
+                                </div>
+                                <div className='flex items-center justify-between text-gray-700 font-medium mt-3'>
+                                    <p>Discount</p>
+                                    <p className='text-green-500'>-{displayINRCurrency(totalMRP-totalPrice)}</p>
+                                </div>
+                                <div className='flex items-center justify-between text-gray-700 font-medium mt-3'>
+                                    <p>Delivery Charges</p>
+                                    <p className='flex gap-2'>
+                                        <span className='line-through font-medium text-gray-400'>{displayINRCurrency(50)}</span>
+                                        <span className='text-green-500'>FREE</span>
+                                    </p>
+                                    
+                                </div>
+
+                                <div className='flex items-center justify-between text-black text-lg font-semibold my-7'>
                                     <p>Total Price</p>
                                     <p>{displayINRCurrency(totalPrice)}</p>
                                 </div>
+                                <p className='font-medium text-gray-700'>You will save <span className='text-green-500 font-bold'>₹{displayINRCurrency(totalMRP-totalPrice)}</span> on this order</p>
                             </div>
                             <button className='bg-blue-600 hover:bg-blue-700 text-white w-full py-3 rounded-b-lg transition-colors duration-200'>
                                 Proceed to Payment

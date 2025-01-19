@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import login from '../assets/login.gif'
-import { FaEye } from "react-icons/fa";
-import { FaEyeSlash, FaEnvelope  } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaEnvelope } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import SummaryApi from '../common/index';
