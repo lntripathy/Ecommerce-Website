@@ -4,6 +4,7 @@ import axios from 'axios'
 import SummaryApi from '../common'
 import SearchedProductDisplay from '../components/SearchedProductDisplay'
 import { AiOutlineFrown } from 'react-icons/ai';
+import { FaSpinner } from 'react-icons/fa';
 
 const SearchProduct = () => {
 
@@ -27,19 +28,27 @@ const SearchProduct = () => {
     return (
         <div className='container mx-auto p-6 bg-gray-50 min-h-screen'>
             {/* Loading Indicator */}
-            {loading && (
-                <p className='text-lg text-pink-700 text-center flex items-center justify-center gap-2'>
-                    <span className='animate-spin border-2 border-pink-700 border-t-transparent rounded-full w-5 h-5'></span>
-                    Loading...
-                </p>
+            {loading ? (
+                <div className="flex flex-col items-center justify-center h-64">
+                    {/* Spinner Icon */}
+                    <div className="animate-spin text-blue-500 text-4xl mb-4">
+                        <FaSpinner />
+                    </div>
+                    {/* Loading Text */}
+                    <p className="text-lg font-semibold text-gray-600 animate-pulse">
+                        Loading, please wait...
+                    </p>
+                </div>
+            ) : (
+
+                // {/* Search Results Header */}
+                <div className='text-lg font-semibold my-5 flex items-center justify-between'>
+                    <p>
+                        <span className='text-blue-600'>Search Results:</span> {data.length}
+                    </p>
+                </div>
             )}
 
-            {/* Search Results Header */}
-            <div className='text-lg font-semibold my-5 flex items-center justify-between'>
-                <p>
-                    <span className='text-blue-600'>Search Results:</span> {data.length}
-                </p>
-            </div>
 
             {/* No Data Found */}
             {data.length === 0 && !loading && (
