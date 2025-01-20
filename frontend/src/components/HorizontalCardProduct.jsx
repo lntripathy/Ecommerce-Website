@@ -57,7 +57,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
             <h2 className='text-2xl font-semibold py-4 text-gray-800'>{heading}</h2>
 
             {/* Scrollable Product Section */}
-            <div className='flex items-center gap-4 md:gap-6 overflow-scroll scrollbar-hide' 
+            <div className='flex items-center pb-1 gap-4 md:gap-6 overflow-scroll scrollbar-hide' 
             ref={scrollElement}>
                 {/* Scroll Buttons */}
                 <button
@@ -99,10 +99,10 @@ const HorizontalCardProduct = ({ category, heading }) => {
                             <Link
                                 to={`product/${product?._id}`}
                                 key={index}
-                                className='w-full min-w-[300px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 bg-white rounded-sm shadow-md flex hover:shadow-lg transition-shadow'
+                                className='w-full min-w-[300px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 bg-white rounded-md shadow-sm flex hover:shadow-md transition-shadow'
                             >
                                 {/* Product Image */}
-                                <div className='bg-gray-100 h-full p-4 min-w-[120px] md:min-w-[145px] rounded-l-md flex items-center'>
+                                <div className='bg-gray-100 h-full p-4 min-w-[120px] md:min-w-[145px] rounded-md flex items-center'>
                                     <img
                                         src={product.productImage[0]}
                                         alt={product.productName}

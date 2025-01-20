@@ -57,7 +57,7 @@ const VerticalCardProduct = ({ category, heading }) => {
 
             {/* Scrollable Product Section */}
             <div
-                className="flex items-center gap-4 md:gap-6 overflow-scroll scrollbar-hide"
+                className="flex items-center gap-4 pb-1 md:gap-6 overflow-scroll scrollbar-hide"
                 ref={scrollElement}
             >
                 {/* Scroll Buttons */}
@@ -93,10 +93,10 @@ const VerticalCardProduct = ({ category, heading }) => {
                         <Link
                             to={`product/${product?._id}`}
                             key={index}
-                            className="w-full min-w-[280px] md:min-w-[300px] max-w-[320px] bg-white rounded-lg shadow-md hover:shadow-lg flex flex-col transition-shadow"
+                            className="w-full min-w-[280px] md:min-w-[300px] max-w-[320px] bg-white rounded-lg shadow-sm hover:shadow-md flex flex-col transition-shadow"
                         >
                             {/* Product Image */}
-                            <div className="bg-gray-100 h-40 w-full flex items-center justify-center overflow-hidden">
+                            <div className="bg-gray-100 h-40 w-full rounded-lg flex items-center justify-center overflow-hidden">
                                 <img
                                     src={product.productImage[0]}
                                     alt={product.productName}
