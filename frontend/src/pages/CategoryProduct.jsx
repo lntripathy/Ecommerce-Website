@@ -13,10 +13,19 @@ const CategoryProduct = () => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
 
-    // const location = useLocation()
-    // const urlCategory = new 
+    const location = useLocation()
+    const urlSearch = new URLSearchParams(location.search)
+    const urlCategoryListArray = urlSearch.getAll("category")
 
-    const [selectCategory, setSelectcategory] = useState({})
+    const urlCategoryListObject = {}
+    urlCategoryListArray.forEach(el => {
+        urlCategoryListObject[el] = true
+    })
+
+    console.log("urlCategoryListObject", urlCategoryListObject)
+
+
+    const [selectCategory, setSelectCategory] = useState(urlCategoryListObject)
     const [filterCategoryList, setFilterCategoryList] = useState([])
 
     const fetchData = async () => {
@@ -33,13 +42,13 @@ const CategoryProduct = () => {
 
         const responseData = await response.data
         setData(responseData?.data || [])
-        console.log("response data: ", responseData.data)
+        // console.log("response data: ", responseData.data)
     }
 
     const handleSelectCategory = (e) => {
         const { name, value, checked } = e.target
 
-        setSelectcategory((prev) => {
+        setSelectCategory((prev) => {
             return {
                 ...prev,
                 [value]: checked
