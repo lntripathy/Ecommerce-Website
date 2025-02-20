@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FaSortAmountUpAlt, FaSortAmountDownAlt } from 'react-icons/fa';
 import { BiCategory } from 'react-icons/bi';
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { productCategory } from '../helpers/productCategory'
 import SearchedProductDisplay from '../components/SearchedProductDisplay'
 import axios from 'axios'
@@ -13,6 +13,7 @@ const CategoryProduct = () => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
 
+    const navigate = useNavigate()
     const location = useLocation()
     const urlSearch = new URLSearchParams(location.search)
     const urlCategoryListArray = urlSearch.getAll("category")
@@ -22,11 +23,16 @@ const CategoryProduct = () => {
         urlCategoryListObject[el] = true
     })
 
-    console.log("urlCategoryListObject", urlCategoryListObject)
-
-
-    const [selectCategory, setSelectCategory] = useState(urlCategoryListObject)
+    // error fixed
+    const [selectCategory, setSelectCategory] = useState(() => {
+        return productCategory.reduce((acc, category) => {
+            acc[category.value] = urlCategoryListObject[category.value] || false;
+            return acc;
+        }, {});
+    });
     const [filterCategoryList, setFilterCategoryList] = useState([])
+
+    const [sortBy, setSortBy] = useState("")
 
     const fetchData = async () => {
         const response = await axios({
@@ -42,7 +48,6 @@ const CategoryProduct = () => {
 
         const responseData = await response.data
         setData(responseData?.data || [])
-        // console.log("response data: ", responseData.data)
     }
 
     const handleSelectCategory = (e) => {
@@ -71,7 +76,17 @@ const CategoryProduct = () => {
 
         setFilterCategoryList(arrayOfCategory)
 
-        // console.log("selectCategory : ", arrayOfCategory )
+        // formating url to set in the url search bar 
+        const urlFormat = arrayOfCategory.map((el, index) => {
+            if ((arrayOfCategory.length - 1) === index) {
+                return `category=${el}`
+            }
+            else {
+                return `category=${el}&&`
+            }
+        })
+        navigate(`/product-category?` + urlFormat.join(""))
+
     }, [selectCategory])
 
 
@@ -99,6 +114,7 @@ const CategoryProduct = () => {
                                         value={"asc"}
                                         id="low-to-high"
                                         className='cursor-pointer accent-blue-600'
+                                        onChange={(e) => setSortBy(e.target.value)}
                                     />
                                     <label htmlFor="low-to-high" className='cursor-pointer'>
                                         Price - Low to High
@@ -111,6 +127,7 @@ const CategoryProduct = () => {
                                         value={"dsc"}
                                         id="high-to-low"
                                         className='cursor-pointer accent-blue-600'
+                                        onChange={(e) => setSortBy(e.target.value)}
                                     />
                                     <label htmlFor="high-to-low" className='cursor-pointer'>
                                         Price - High to Low
