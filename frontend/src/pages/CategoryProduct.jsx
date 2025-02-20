@@ -90,6 +90,21 @@ const CategoryProduct = () => {
     }, [selectCategory])
 
 
+    // sorting of the products
+    const handleOnChangeSortBy = (e) => {
+        const { value } = e.target
+
+        setSortBy(value)
+        
+        if (value === "asc") {
+            setData(prev => prev.sort((a, b) => a.sellingPrice - b.sellingPrice))
+        }
+        if (value === "dsc") {
+            setData(prev => prev.sort((a, b) => b.sellingPrice - a.sellingPrice))
+        }
+    }
+
+
     return (
 
         <div className='capitalize'>
@@ -111,10 +126,11 @@ const CategoryProduct = () => {
                                     <input
                                         type='radio'
                                         name='sortBy'
+                                        checked={sortBy === "asc"}
                                         value={"asc"}
                                         id="low-to-high"
                                         className='cursor-pointer accent-blue-600'
-                                        onChange={(e) => setSortBy(e.target.value)}
+                                        onChange={handleOnChangeSortBy}
                                     />
                                     <label htmlFor="low-to-high" className='cursor-pointer'>
                                         Price - Low to High
@@ -124,10 +140,11 @@ const CategoryProduct = () => {
                                     <input
                                         type='radio'
                                         name='sortBy'
+                                        checked={sortBy === "dsc"}
                                         value={"dsc"}
                                         id="high-to-low"
                                         className='cursor-pointer accent-blue-600'
-                                        onChange={(e) => setSortBy(e.target.value)}
+                                        onChange={handleOnChangeSortBy}
                                     />
                                     <label htmlFor="high-to-low" className='cursor-pointer'>
                                         Price - High to Low
