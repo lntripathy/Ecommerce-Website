@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import logo from '../assets/logo.png'
 import { GrSearch } from "react-icons/gr";
 import { FaCircleUser, FaCartShopping } from "react-icons/fa6";
-import { FaSignInAlt, FaSignOutAlt  } from "react-icons/fa"
+import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa"
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -22,7 +22,9 @@ const Header = () => {
     const navigate = useNavigate()
 
     const searchInput = useLocation()
-    const [search, setSearch] = useState(searchInput?.search.split('=')[1])
+    const URLSearch = new URLSearchParams(searchInput?.search)
+    const searchQuery = URLSearch.get('q')
+    const [search, setSearch] = useState(searchQuery || "")
 
 
     // after logout 
@@ -45,14 +47,14 @@ const Header = () => {
         }
     }
 
-    const handleSearch  = async (e) => {
+    const handleSearch = async (e) => {
         const { value } = e.target
         setSearch(value)
 
-        if(value) {
+        if (value) {
             navigate(`/search?q=${value}`)
         }
-        else{
+        else {
             navigate(`/search`)
         }
     }
@@ -124,7 +126,7 @@ const Header = () => {
 
                     {
                         user?._id && (
-                            <Link to={"view-cart"} className="text-3xl cursor-pointer relative" onClick={()=>window.scrollTo({ top: 0 })}>
+                            <Link to={"view-cart"} className="text-3xl cursor-pointer relative" onClick={() => window.scrollTo({ top: 0 })}>
                                 <span>
                                     <FaCartShopping className="text-black hover:scale-105 transition-all" />
                                 </span>
