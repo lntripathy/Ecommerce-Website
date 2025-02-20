@@ -4,7 +4,6 @@ const url = `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_NAME_CLOUDIN
 
 const uploadImage = async (image) => {
 
-    console.log(import.meta.env.VITE_NAME_CLOUDINARY)
     try {
         const formData = new FormData();
         formData.append("file", image);

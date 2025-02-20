@@ -17,7 +17,6 @@ const Cart = () => {
     const loadingCart = new Array(context.cartProductCount).fill(null)
 
     const fetchData = async () => {
-        setLoading(true)
         const response = await axios({
             url: SummaryApi.cartView.url,
             method: SummaryApi.cartView.method,
@@ -26,8 +25,6 @@ const Cart = () => {
                 "content-type": "application/json"
             },
         })
-        setLoading(false)
-
         const responseData = await response.data
 
         if (responseData.success) {
@@ -35,8 +32,16 @@ const Cart = () => {
         }
     }
 
+
+// fixing the cart loading issue
+    const handleLoading = async() => {
+        setLoading(true)
+        await fetchData()
+        setLoading(false)
+
+    }
     useEffect(() => {
-        fetchData()
+        handleLoading()
     }, [])
 
     // increase quantity
@@ -109,7 +114,7 @@ const Cart = () => {
         if (responseData.success) {
             fetchData()
             context.fetchUserCart()
-            toast.warning(responseData.message)
+            toast.info(responseData.message)
         }
     }
 

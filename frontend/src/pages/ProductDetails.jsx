@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import SummaryApi from '../common'
 import axios from 'axios'
 import displayINRCurrency from '../helpers/displayCurrency'
@@ -30,6 +30,7 @@ const ProductDetails = () => {
         y: 0
     })
     const [zoomImage, setZoomImage] = useState(false)
+    const navigate = useNavigate()
 
 
     const fetchProductDetails = async () => {
@@ -80,6 +81,13 @@ const ProductDetails = () => {
     const handleAddToCart = async (e, id) => {
         await addToCart(e, id)
         fetchUserCart()
+    }
+
+    // handle buy product
+    const handleBuyProduct= async (e, id) => {
+        await addToCart(e, id)
+        fetchUserCart()
+        navigate('/view-cart')
     }
 
     return (
@@ -210,7 +218,7 @@ const ProductDetails = () => {
 
                             <div className='flex items-center gap-3 my-2'>
                                 <button
-                                    className='border-2 border-pink-700 rounded-md px-4 py-2 min-w-[120px] text-pink-700 font-medium hover:bg-pink-700 hover:text-white transition-colors duration-100'>
+                                    className='border-2 border-pink-700 rounded-md px-4 py-2 min-w-[120px] text-pink-700 font-medium hover:bg-pink-700 hover:text-white transition-colors duration-100' onClick={(e) => handleBuyProduct(e, data?._id)}>
                                     Buy
                                 </button>
                                 <button
