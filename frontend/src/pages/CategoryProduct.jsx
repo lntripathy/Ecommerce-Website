@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FaSortAmountUpAlt, FaSortAmountDownAlt } from 'react-icons/fa';
 import { BiCategory } from 'react-icons/bi';
+import { FaSpinner } from 'react-icons/fa';
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { productCategory } from '../helpers/productCategory'
 import SearchedProductDisplay from '../components/SearchedProductDisplay'
@@ -35,6 +36,7 @@ const CategoryProduct = () => {
     const [sortBy, setSortBy] = useState("")
 
     const fetchData = async () => {
+        setLoading(true)
         const response = await axios({
             url: SummaryApi.filterProduct.url,
             method: SummaryApi.filterProduct.method,
@@ -48,6 +50,7 @@ const CategoryProduct = () => {
 
         const responseData = await response.data
         setData(responseData?.data || [])
+        setLoading(false)
     }
 
     const handleSelectCategory = (e) => {
@@ -95,7 +98,7 @@ const CategoryProduct = () => {
         const { value } = e.target
 
         setSortBy(value)
-        
+
         if (value === "asc") {
             setData(prev => prev.sort((a, b) => a.sellingPrice - b.sellingPrice))
         }
@@ -190,9 +193,21 @@ const CategoryProduct = () => {
 
                         <div className='bg-white p-4 shadow-md rounded-lg min-h-[calc(100vh-120px)] max-h-[calc(100vh-120px)] overflow-y-auto'>
                             {data.length !== 0 && !loading ? (
-                                <SearchedProductDisplay data={data} loading={loading} />
+                                <SearchedProductDisplay data={data} />
                             ) : (
-                                <p className='text-center text-gray-500'>No Products Found.</p>
+                                <>
+                                    {/* <p className='text-center text-gray-500'>No Products Found.</p> */}
+                                    <div className="flex flex-col items-center justify-center h-64">
+                                        {/* Spinner Icon */}
+                                        <div className="animate-spin text-blue-500 text-4xl mb-4">
+                                            <FaSpinner />
+                                        </div>
+                                        {/* Loading Text */}
+                                        <p className="text-lg font-semibold text-gray-600 animate-pulse">
+                                            Loading, please wait...
+                                        </p>
+                                    </div>
+                                </>
                             )}
                         </div>
                     </div>
