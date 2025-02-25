@@ -12,7 +12,7 @@ const Footer = () => {
         {/* Social Media Icons */}
         <div className="flex gap-6 text-2xl">
           <a href="#" className="hover:text-gray-300"><FaInstagram /></a>
-          <a href="https://www.linkedin.com/in/ln-tripathy-089378327" className="hover:text-gray-300"><FaLinkedin /></a>
+          <a href="https://www.linkedin.com/in/ln-tripathy-089378327/" className="hover:text-gray-300"><FaLinkedin /></a>
           <a href="https://x.com/LN_Tripathy" className="hover:text-gray-300"><FaTwitter /></a>
           <a href="https://github.com/lntripathy" className="hover:text-gray-300"><FaGithub /></a>
         </div>
