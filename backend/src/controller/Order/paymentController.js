@@ -10,7 +10,7 @@ export const paymentController = async (req, res) => {
     const options = {
         amount: totalPrice * 100, // amount in the smallest currency unit
         currency: "INR",
-        receipt: "order_rcptid_11",
+        receipt: `order_rcptid_${Date.now()}`,
     };
     try {
         razorpayInstance.orders.create(options, (err, order) => {
