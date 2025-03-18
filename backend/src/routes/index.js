@@ -19,6 +19,8 @@ import updateCartCount from "../controller/user/updateCartCount.js";
 import deleteCartProduct from "../controller/user/deleteCartProduct.js";
 import searchProduct from "../controller/product/searchProduct.js";
 import filterProduct from "../controller/product/filterProduct.js";
+import { paymentController } from "../controller/Order/paymentController.js";
+import { verifyPayment } from "../controller/Order/verifyPayment.js";
 
 const router = express.Router()
 
@@ -47,5 +49,9 @@ router.get("/count-cart-product", authToken, countCartProduct)
 router.get("/view-cart", authToken, cartView)
 router.post("/update-cart-count", authToken, updateCartCount)
 router.post("/delete-cart-product", authToken, deleteCartProduct)
+
+// payment and order 
+router.post("/checkout",authToken, paymentController)
+router.post("/verifyPayment", verifyPayment)
 
 export default router 

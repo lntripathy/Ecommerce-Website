@@ -93,6 +93,7 @@ const VerticalCardProduct = ({ category, heading }) => {
                         <Link
                             to={`product/${product?._id}`}
                             key={index}
+                            onClick={()=>window.scrollTo({ top: 0, behavior: 'smooth'})}
                             className="w-full min-w-[280px] md:min-w-[300px] max-w-[320px] bg-white rounded-lg shadow-sm hover:shadow-md flex flex-col transition-shadow"
                         >
                             {/* Product Image */}

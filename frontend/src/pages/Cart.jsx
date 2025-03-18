@@ -5,7 +5,7 @@ import SummaryApi from '../common'
 import Context from '../context/Index'
 import { toast } from 'react-toastify';
 import { MdDelete } from "react-icons/md";
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 
 
@@ -15,6 +15,7 @@ const Cart = () => {
     const [loading, setLoading] = useState(false)
     const context = useContext(Context)
     const loadingCart = new Array(context.cartProductCount).fill(null)
+    const navigate = useNavigate()
 
     const fetchData = async () => {
         const response = await axios({
@@ -33,8 +34,8 @@ const Cart = () => {
     }
 
 
-// fixing the cart loading issue
-    const handleLoading = async() => {
+    // fixing the cart loading issue
+    const handleLoading = async () => {
         setLoading(true)
         await fetchData()
         setLoading(false)
@@ -42,6 +43,7 @@ const Cart = () => {
     }
     useEffect(() => {
         handleLoading()
+        loadScript('https://checkout.razorpay.com/v1/checkout.js')
     }, [])
 
     // increase quantity
@@ -118,10 +120,70 @@ const Cart = () => {
         }
     }
 
+
     const totalQty = data.reduce((previousValue, currentValue) => previousValue + currentValue.quantity, 0)
     const totalMRP = data.reduce((previousValue, currentValue) => previousValue + currentValue.quantity * currentValue?.productId?.price, 0)
     const totalPrice = data.reduce((previousValue, currentValue) => previousValue + currentValue.quantity * currentValue?.productId?.sellingPrice, 0)
 
+
+    // handle payment
+    const handlePayment = async () => {
+
+        const response = await axios({
+            url: SummaryApi.payment.url,
+            method: SummaryApi.payment.method,
+            withCredentials: true,
+            header: {
+                "content-type": "application/json"
+            },
+            data: { totalPrice }
+        })
+
+        const responseData = await response.data
+
+        const paymentObject = new window.Razorpay({
+            key: "rzp_test_hwbvlwxXK9D2ey",
+            order_id: responseData.data.id,
+            ...data,
+            handler: function (response) {
+                const options = {
+                    order_id: responseData.data.id,
+                    payment_id: response.razorpay_payment_id,
+                    signature: response.razorpay_signature
+                }
+
+                axios.post(SummaryApi.verifyPayment.url, options)
+                    .then((res) => {
+                        if (res.data.success) {
+                            toast.success("Transaction Complete! Your order is on the way.")
+                            navigate('/order')
+                        }
+                        else{
+                            toast.error("Something went Wrong")
+                        }
+                    })
+            }
+
+        })
+        paymentObject.open()
+
+    }
+
+
+    const loadScript = (src) => {
+        return new Promise((resolve, reject) => {
+            const existingScript = document.querySelector(`script[src="${src}"]`);
+            if (existingScript) {
+                resolve(true); // already loaded
+                return;
+            }
+            const script = document.createElement('script');
+            script.src = src;
+            script.onload = () => resolve(true);
+            script.onerror = () => reject(false);
+            document.body.appendChild(script);
+        });
+    };
 
 
     return (
@@ -204,50 +266,53 @@ const Cart = () => {
 
 
                 {/* summary  */}
-                <div className='w-full lg:max-w-lg'>
-                    {loading ? (
-                        <div className='h-40 bg-slate-200 border border-slate-300 animate-pulse rounded-lg'></div>
-                    ) : (
-                        <div className='bg-white border border-slate-300 rounded-lg shadow-sm'>
-                            <h2 className='bg-pink-700 text-white text-lg font-medium px-4 py-2 rounded-t-lg'>
-                                Summary
-                            </h2>
-                            <div className='px-4 py-2'>
-                                <div className='flex items-center justify-between text-gray-700 font-medium'>
-                                    <p>Quantity</p>
-                                    <p>{totalQty}</p>
-                                </div>
-                                <div className='flex items-center justify-between text-gray-700 font-medium mt-3'>
-                                    <p>MRP</p>
-                                    <p>{displayINRCurrency(totalMRP)}</p>
-                                </div>
-                                <div className='flex items-center justify-between text-gray-700 font-medium mt-3'>
-                                    <p>Discount</p>
-                                    <p className='text-green-500'>-{displayINRCurrency(totalMRP-totalPrice)}</p>
-                                </div>
-                                <div className='flex items-center justify-between text-gray-700 font-medium mt-3'>
-                                    <p>Delivery Charges</p>
-                                    <p className='flex gap-2'>
-                                        <span className='line-through font-medium text-gray-400'>{displayINRCurrency(50)}</span>
-                                        <span className='text-green-500'>FREE</span>
-                                    </p>
-                                    
-                                </div>
+                {
+                    data[0] && (
 
-                                <div className='flex items-center justify-between text-black text-lg font-semibold my-7'>
-                                    <p>Total Price</p>
-                                    <p>{displayINRCurrency(totalPrice)}</p>
+                        <div className='w-full lg:max-w-lg'>
+                            {loading ? (
+                                <div className='h-40 bg-slate-200 border border-slate-300 animate-pulse rounded-lg'></div>
+                            ) : (
+                                <div className='bg-white border border-slate-300 rounded-lg shadow-sm'>
+                                    <h2 className='bg-pink-700 text-white text-lg font-medium px-4 py-2 rounded-t-lg'>
+                                        Summary
+                                    </h2>
+                                    <div className='px-4 py-2'>
+                                        <div className='flex items-center justify-between text-gray-700 font-medium'>
+                                            <p>Quantity</p>
+                                            <p>{totalQty}</p>
+                                        </div>
+                                        <div className='flex items-center justify-between text-gray-700 font-medium mt-3'>
+                                            <p>MRP</p>
+                                            <p>{displayINRCurrency(totalMRP)}</p>
+                                        </div>
+                                        <div className='flex items-center justify-between text-gray-700 font-medium mt-3'>
+                                            <p>Discount</p>
+                                            <p className='text-green-500'>-{displayINRCurrency(totalMRP - totalPrice)}</p>
+                                        </div>
+                                        <div className='flex items-center justify-between text-gray-700 font-medium mt-3'>
+                                            <p>Delivery Charges</p>
+                                            <p className='flex gap-2'>
+                                                <span className='line-through font-medium text-gray-400'>{displayINRCurrency(50)}</span>
+                                                <span className='text-green-500'>FREE</span>
+                                            </p>
+
+                                        </div>
+
+                                        <div className='flex items-center justify-between text-black text-lg font-semibold my-7'>
+                                            <p>Total Price</p>
+                                            <p>{displayINRCurrency(totalPrice)}</p>
+                                        </div>
+                                        <p className='font-medium text-gray-700'>You will save <span className='text-green-500 font-bold'>{displayINRCurrency(totalMRP - totalPrice)}</span> on this order</p>
+                                    </div>
+                                    <button className='bg-blue-600 hover:bg-blue-700 text-white w-full py-3 rounded-b-lg transition-colors duration-200 on' onClick={handlePayment}>
+                                        Proceed to Payment
+                                    </button>
                                 </div>
-                                <p className='font-medium text-gray-700'>You will save <span className='text-green-500 font-bold'>{displayINRCurrency(totalMRP-totalPrice)}</span> on this order</p>
-                            </div>
-                            <Link to={'/order'}>
-                                <button className='bg-blue-600 hover:bg-blue-700 text-white w-full py-3 rounded-b-lg transition-colors duration-200'>
-                                    Proceed to Payment
-                                </button>
-                            </Link>
+                            )}
                         </div>
-                    )}
-                </div>
+                    )
+                }
             </div>
         </div >
     )

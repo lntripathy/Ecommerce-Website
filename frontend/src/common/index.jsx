@@ -1,4 +1,4 @@
-const backendDomain =  import.meta.env.VITE_NAME_BackEnd_URL
+const backendDomain = import.meta.env.VITE_NAME_BackEnd_URL
 // "http://localhost:3000" || "https://lnkart.onrender.com"
 
 const SummaryApi = {
@@ -78,6 +78,14 @@ const SummaryApi = {
         url: `${backendDomain}/api/filter-product`,
         method: "post"
     },
+    payment: {
+        url: `${backendDomain}/api/checkout`,
+        method: "post"
+    },
+    verifyPayment: {
+        url: `${backendDomain}/api/verifyPayment`,
+        method: "post"
+    }
 }
 
 export default SummaryApi
