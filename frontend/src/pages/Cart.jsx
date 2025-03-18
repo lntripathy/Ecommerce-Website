@@ -240,9 +240,11 @@ const Cart = () => {
                                 </div>
                                 <p className='font-medium text-gray-700'>You will save <span className='text-green-500 font-bold'>{displayINRCurrency(totalMRP-totalPrice)}</span> on this order</p>
                             </div>
-                            <button className='bg-blue-600 hover:bg-blue-700 text-white w-full py-3 rounded-b-lg transition-colors duration-200'>
-                                Proceed to Payment
-                            </button>
+                            <Link to={'/order'}>
+                                <button className='bg-blue-600 hover:bg-blue-700 text-white w-full py-3 rounded-b-lg transition-colors duration-200'>
+                                    Proceed to Payment
+                                </button>
+                            </Link>
                         </div>
                     )}
                 </div>

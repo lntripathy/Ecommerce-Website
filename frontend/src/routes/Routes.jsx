@@ -12,6 +12,7 @@ import CategoryProduct from '../pages/CategoryProduct'
 import ProductDetails from '../pages/ProductDetails'
 import Cart from '../pages/Cart'
 import SearchProduct from '../pages/SearchProduct'
+import OrderPlaced from '../pages/OrderPlaced'
 
 
 const router = createBrowserRouter([
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
             {
                 path: "search",
                 element: <SearchProduct />
+            },
+            {
+                path: "order",
+                element: <OrderPlaced />
             },
             {
                 path: "admin-panel",
