@@ -3,7 +3,7 @@ import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 
 const ForgotPassword = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-200 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-pink-50 to-white px-4">
       <div className="bg-white shadow-xl rounded-2xl p-8 max-w-md w-full flex flex-col gap-6 border border-gray-200 text-center">
 
         <h1 className="text-3xl font-extrabold text-pink-700">Forgot Password?</h1>

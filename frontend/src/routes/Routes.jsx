@@ -13,6 +13,7 @@ import ProductDetails from '../pages/ProductDetails'
 import Cart from '../pages/Cart'
 import SearchProduct from '../pages/SearchProduct'
 import OrderPlaced from '../pages/OrderPlaced'
+import PaymentLoading from '../pages/PaymentLoading'
 
 
 const router = createBrowserRouter([
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
             {
                 path: "order",
                 element: <OrderPlaced />
+            },
+            {
+                path: "payment",
+                element: <PaymentLoading />
             },
             {
                 path: "admin-panel",

@@ -129,6 +129,7 @@ const Cart = () => {
     // handle payment
     const handlePayment = async () => {
 
+        navigate('/payment')
         const response = await axios({
             url: SummaryApi.payment.url,
             method: SummaryApi.payment.method,
