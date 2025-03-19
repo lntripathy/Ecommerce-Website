@@ -141,6 +141,7 @@ const Cart = () => {
         })
 
         const responseData = await response.data
+        navigate('/view-cart')
 
         const paymentObject = new window.Razorpay({
             key: "rzp_test_hwbvlwxXK9D2ey",
@@ -161,6 +162,7 @@ const Cart = () => {
                         }
                         else{
                             toast.error("Something went Wrong")
+                            console.log("error why")
                         }
                     })
             }
