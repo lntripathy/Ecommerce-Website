@@ -18,9 +18,9 @@ const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <p className="text-sm text-gray-200">
-          © {new Date().getFullYear()} lnKarT. All Rights Reserved.
-        </p>
+        <marquee scrollamount="16" className="text-sm text-gray-200">
+           © {new Date().getFullYear()} lnKarT | All Rights Reserved | Designed and Developed by LN Tripathy | Follow us on LinkedIn, GitHub, Twitter, and Instagram | Innovating eCommerce, One Cart at a Time 🚀 | SHOP ON
+        </marquee>
       </div>
     </footer>
   );
